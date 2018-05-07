@@ -25,7 +25,7 @@ After you have installed node.js and made sure it is working you are ready to se
 
 ```bash
 $ npm install pm2 -g
-$ npm install arkecosystem/json-rpc#master
+$ npm install @arkecosystem/json-rpc
 ```
 
 ## Running the JSON-RPC Server
