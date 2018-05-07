@@ -1,5 +1,4 @@
 const request = require('./__support__/request')
-const arkjs = require('arkjs')
 
 jest.setTimeout(60000)
 
