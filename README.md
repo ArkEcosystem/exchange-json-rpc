@@ -8,9 +8,9 @@
 
 ### Security Warning for Production
 
-All calls should be made from the server where JSON-RPC is running at ( i.e., `localhost` or `127.0.0.1` ). The JSON-RPC server should never be publicly accessible. If you wish to access ark-rpc from a remote address, you can whitelist the address with `--allow <address>`. Addresses allow you to use wildcards, eg. `192.168.1.*` or `10.0.*.*`.
+All calls should be made from the server where JSON-RPC is running at (i.e., `localhost` or `127.0.0.1`). The JSON-RPC server should never be publicly accessible. If you wish to access JSON-RPC server from a remote address, you can whitelist the address with `--allow <address>`. Addresses allow you to use wildcards, eg. `192.168.1.*` or `10.0.*.*`.
 
-If you do want to allow access from all remotes, start ark-rpc with the `--allow-remote` commandline switch. This can be dangerous.
+If you do want to allow access from all remotes, start the JSON-RPC server with the `--allow-remote` commandline switch. This can be dangerous.
 
 ## Installation
 
@@ -25,7 +25,7 @@ After you have installed node.js and made sure it is working you are ready to se
 
 ```bash
 $ npm install pm2 -g
-$ npm install arkecosystem/ark-rpc#master
+$ npm install arkecosystem/json-rpc#master
 ```
 
 ## Running the JSON-RPC Server
@@ -35,7 +35,7 @@ $ npm install arkecosystem/ark-rpc#master
 The recommended way of running and keeping your JSON-RPC server alive is [pm2](http://pm2.keymetrics.io/).
 
 ```bash
-$ pm2 start ark-rpc
+$ pm2 start ark-json-rpc
 ```
 
 ### Docker
@@ -43,13 +43,13 @@ $ pm2 start ark-rpc
 If you would like to run from a docker environment, you will first need to build the container by running:
 
 ```bash
-$ docker build -t ark-rpc .
+$ docker build -t ark-json-rpc .
 ```
 
 You will need to run the container with the `--allow-remote` option to allow the host machine to access the container.
 
 ```bash
-$ docker run -d -p 8080:8080 ark-rpc --allow-remote
+$ docker run -d -p 8080:8080 ark-json-rpc --allow-remote
 ```
 
 ## Security
