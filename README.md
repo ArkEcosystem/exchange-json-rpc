@@ -4,6 +4,12 @@
     <img src="https://raw.githubusercontent.com/ARKEcosystem/json-rpc/master/banner.png" />
 </p>
 
+[![Latest Version](https://badgen.now.sh/npm/v/@arkecosystem/json-rpc)](https://www.npmjs.com/package/@arkecosystem/json-rpc)
+[![Node Engine](https://badgen.now.sh/npm/node/@arkecosystem/json-rpc)](https://www.npmjs.com/package/@arkecosystem/json-rpc)
+[![Build Status](https://badgen.now.sh/circleci/github/arkecosystem/json-rpc)](https://circleci.com/gh/arkecosystem/json-rpc)
+[![Codecov](https://badgen.now.sh/codecov/c/github/arkecosystem/json-rpc)](https://codecov.io/gh/arkecosystem/json-rpc)
+[![License: MIT](https://badgen.now.sh/badge/license/MIT/green)](https://opensource.org/licenses/MIT)
+
 **THIS PACKAGE IS UNDER DEVELOPMENT UNTIL THE RELEASE OF CORE 2.4.0!**
 
 ## Documentation
