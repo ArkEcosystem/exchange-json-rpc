@@ -1,0 +1,180 @@
+{
+    "name": "@arkecosystem/json-rpc",
+    "version": "1.0.0-next.5",
+    "description": "A JSON-RPC 2.0 specification compliant server to interact with the ARK Blockchain.",
+    "license": "MIT",
+    "author": "Brian Faust <brian@ark.io>",
+    "files": [
+        "/bin",
+        "/dist",
+        "/oclif.manifest.json"
+    ],
+    "main": "dist/index",
+    "types": "dist/index",
+    "bin": {
+        "ark-json-rpc": "./bin/run"
+    },
+    "scripts": {
+        "ark-json-rpc": "./bin/run",
+        "build": "yarn clean && yarn compile",
+        "build:watch": "yarn clean && yarn compile -w",
+        "clean": "del dist",
+        "compile": "./node_modules/typescript/bin/tsc",
+        "prepack": "./node_modules/.bin/oclif-dev manifest && npm shrinkwrap",
+        "postpack": "rm -f oclif.manifest.json",
+        "prepublishOnly": "yarn build",
+        "test": "jest --forceExit --runInBand"
+    },
+    "jest": {
+        "bail": true,
+        "collectCoverage": true,
+        "collectCoverageFrom": [
+            "src/**/*.ts",
+            "!src/index.ts",
+            "!**/node_modules/**"
+        ],
+        "coverageDirectory": "<rootDir>/.coverage",
+        "coverageReporters": [
+            "json",
+            "lcov",
+            "text",
+            "clover",
+            "html"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "json",
+            "node"
+        ],
+        "setupFilesAfterEnv": [
+            "jest-extended"
+        ],
+        "testEnvironment": "node",
+        "testMatch": [
+            "**/*.test.ts"
+        ],
+        "transform": {
+            "^.+\\.tsx?$": "ts-jest"
+        },
+        "verbose": true,
+        "watchman": false
+    },
+    "dependencies": {
+        "@arkecosystem/core-utils": "^2.4.0-next.3",
+        "@arkecosystem/crypto": "^2.4.0-next.3",
+        "@faustbrian/dato": "^0.3.0",
+        "@faustbrian/foreman": "^0.1.2",
+        "@faustbrian/hapi-json-rpc": "^0.1.0",
+        "@faustbrian/hapi-whitelist": "^0.1.2",
+        "@hapi/boom": "^7.4.2",
+        "@hapi/hapi": "^18.3.1",
+        "@keyv/sqlite": "^2.0.0",
+        "@oclif/command": "^1.5.13",
+        "@oclif/config": "^1.13.0",
+        "@oclif/plugin-autocomplete": "^0.1.0",
+        "@oclif/plugin-commands": "^1.2.2",
+        "@oclif/plugin-help": "^2.1.6",
+        "@oclif/plugin-not-found": "^1.2.2",
+        "@oclif/plugin-plugins": "^1.7.8",
+        "bip38": "^2.0.2",
+        "bip39": "^3.0.2",
+        "boom": "^7.3.0",
+        "chalk": "^2.4.2",
+        "clear": "^0.1.0",
+        "cli-progress": "^2.1.1",
+        "cli-table3": "^0.5.1",
+        "cli-ux": "^5.2.1",
+        "dlv": "^1.1.2",
+        "env-paths": "^2.2.0",
+        "envfile": "^3.0.0",
+        "execa": "^1.0.0",
+        "fast-levenshtein": "^2.0.6",
+        "fs-extra": "^7.0.1",
+        "got": "^9.6.0",
+        "is-reachable": "^3.1.0",
+        "keyv": "^3.1.0",
+        "latest-version": "^5.1.0",
+        "listr": "^0.14.3",
+        "lodash.minby": "^4.6.0",
+        "lodash.sample": "^4.2.1",
+        "nodejs-tail": "^1.1.0",
+        "ora": "^3.4.0",
+        "pino": "^5.12.3",
+        "pino-pretty": "^3.0.0",
+        "pretty-bytes": "^5.2.0",
+        "pretty-ms": "^5.0.0",
+        "prompts": "^2.0.4",
+        "read-last-lines": "^1.7.1",
+        "semver": "^6.0.0",
+        "uuid": "^3.3.2",
+        "wif": "^2.0.6"
+    },
+    "devDependencies": {
+        "@oclif/dev-cli": "^1.22.0",
+        "@sindresorhus/tsconfig": "^0.3.0",
+        "@types/bip38": "^2.0.1",
+        "@types/boom": "^7.2.1",
+        "@types/cli-progress": "^1.8.1",
+        "@types/dlv": "^1.1.1",
+        "@types/execa": "^0.9.0",
+        "@types/fast-levenshtein": "^0.0.1",
+        "@types/fs-extra": "^5.1.0",
+        "@types/got": "^9.4.4",
+        "@types/hapi__boom": "^7.4.0",
+        "@types/hapi__hapi": "^18.2.1",
+        "@types/jest": "^24.0.12",
+        "@types/keyv": "^3.1.0",
+        "@types/keyv__sqlite": "^2.0.0",
+        "@types/listr": "^0.14.0",
+        "@types/lodash.minby": "^4.6.6",
+        "@types/lodash.sample": "^4.2.6",
+        "@types/nock": "^10.0.2",
+        "@types/pino": "^5.20.0",
+        "@types/prettier": "^1.16.3",
+        "@types/pretty-bytes": "^5.1.0",
+        "@types/pretty-ms": "^4.0.0",
+        "@types/prompts": "^2.4.0",
+        "@types/rimraf": "^2.0.2",
+        "@types/semver": "^6.0.0",
+        "@types/uuid": "^3.4.4",
+        "@types/wif": "^2.0.1",
+        "codecov": "^3.4.0",
+        "cross-env": "^5.2.0",
+        "del-cli": "^1.1.0",
+        "jest": "^24.8.0",
+        "jest-extended": "^0.11.1",
+        "nock": "^10.0.6",
+        "prettier": "^1.17.0",
+        "rimraf": "^2.6.3",
+        "ts-jest": "^24.0.2",
+        "tslint": "^5.16.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "^3.4.5"
+    },
+    "engines": {
+        "node": ">=10.x"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "oclif": {
+        "commands": "./dist/cli/commands",
+        "hooks": {
+            "init": [
+                "./dist/cli/hooks/init/update"
+            ],
+            "command_not_found": [
+                "./dist/cli/hooks/command_not_found/suggest"
+            ]
+        },
+        "bin": "ark-json-rpc",
+        "plugins": [
+            "@oclif/plugin-autocomplete",
+            "@oclif/plugin-commands",
+            "@oclif/plugin-help"
+        ]
+    }
+}
