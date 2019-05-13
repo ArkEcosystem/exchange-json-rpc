@@ -23,20 +23,6 @@
 -   [ ] Yes
 -   [ ] No
 
-## Does this PR release a new version?
-
-<!-- _Put an `x` in the boxes that apply. Preserve all boxes! -->
-
--   [ ] Yes
-    -   [ ] All tests are passing
-    -   [ ] All benchmarks are passing without any _major_ regressions
-    -   [ ] Sync from 0 works on mainnet
-    -   [ ] Sync from 0 works on devnet
-    -   [ ] Starting a new network and forging on it work
-    -   [ ] Explorer is fully functional
-    -   [ ] Wallets are fully functional
--   [ ] No
-
 ## Checklist
 
 <!-- _Put an `x` in the boxes that apply. Preserve all boxes! -->
