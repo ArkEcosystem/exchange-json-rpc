@@ -10,8 +10,6 @@
 [![Codecov](https://badgen.now.sh/codecov/c/github/ArkEcosystem/exchange-json-rpc)](https://codecov.io/gh/ArkEcosystem/exchange-json-rpc)
 [![License: MIT](https://badgen.now.sh/badge/license/MIT/green)](https://opensource.org/licenses/MIT)
 
-**THIS PACKAGE IS UNDER DEVELOPMENT UNTIL THE RELEASE OF CORE 2.4.0!**
-
 ## Documentation
 
 You can find installation instructions and detailed instructions on how to use this package at the [dedicated documentation site](.).
