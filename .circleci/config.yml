@@ -3,7 +3,7 @@ jobs:
     node-10:
         docker:
             - image: circleci/node:10
-        working_directory: ~/json-rpc
+        working_directory: ~/exchange-json-rpc
         steps:
             - checkout
             - restore_cache:
@@ -20,7 +20,7 @@ jobs:
     node-11:
         docker:
             - image: circleci/node:11
-        working_directory: ~/json-rpc
+        working_directory: ~/exchange-json-rpc
         steps:
             - checkout
             - restore_cache:

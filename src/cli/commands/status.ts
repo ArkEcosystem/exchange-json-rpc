@@ -11,7 +11,7 @@ import { BaseCommand } from "./command";
 export class StatusCommand extends BaseCommand {
     public static description: string = "Show the relay status";
 
-    public static examples: string[] = [`$ ark-json-rpc relay:status`];
+    public static examples: string[] = [`$ exchange-json-rpc relay:status`];
 
     public static flags: CommandFlags = {
         ...BaseCommand.flagsNetwork,

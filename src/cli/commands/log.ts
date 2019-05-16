@@ -9,7 +9,7 @@ import { BaseCommand } from "./command";
 export class LogCommand extends BaseCommand {
     public static description: string = "Show the relay log";
 
-    public static examples: string[] = [`$ ark-json-rpc relay:log`];
+    public static examples: string[] = [`$ exchange-json-rpc relay:log`];
 
     public static flags: CommandFlags = {
         ...BaseCommand.flagsNetwork,

@@ -19,12 +19,12 @@ export const init: Hook<"init"> = async function({ id, config }) {
         this.warn(
             `${state.name} update available from ${Chalk.greenBright(state.currentVersion)} to ${Chalk.greenBright(
                 state.updateVersion,
-            )}. Review the latest release and run "ark-json-rpc update" once you wish to update.`,
+            )}. Review the latest release and run "exchange-json-rpc update" once you wish to update.`,
         );
 
         await cli.url(
             `Click here to read the changelog for ${state.currentVersion}.`,
-            `https://github.com/ARKEcosystem/json-rpc/blob/master/CHANGELOG.md`,
+            `https://github.com/ARKEcosystem/exchange-json-rpc/blob/master/CHANGELOG.md`,
         );
     }
 };

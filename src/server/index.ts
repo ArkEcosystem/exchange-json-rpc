@@ -1,14 +1,14 @@
 import { Types } from "@arkecosystem/crypto";
-import * as rpc from "@faustbrian/hapi-json-rpc";
-import * as whitelist from "@faustbrian/hapi-whitelist";
 import { Server } from "@hapi/hapi";
+import * as rpc from "@hapist/json-rpc";
+import * as whitelist from "@hapist/whitelist";
 import { logger } from "../services/logger";
 import { network } from "../services/network";
 import { methods } from "./methods";
 
 export async function startServer(options: Record<string, string | number | boolean>): Promise<Server> {
     if (options.allowRemote) {
-        logger.warn("JSON-RPC server allows remote connections, this is a potential security risk");
+        logger.warn("exchange-json-rpc server allows remote connections, this is a potential security risk");
     }
 
     const server = new Server({
@@ -38,7 +38,7 @@ export async function startServer(options: Record<string, string | number | bool
 
         await server.start();
 
-        logger.info(`JSON-RPC Server running on ${server.info.uri}`);
+        logger.info(`exchange-json-rpc Server running on ${server.info.uri}`);
     } catch (error) {
         logger.error(error.message);
 

@@ -9,7 +9,7 @@ export class RunCommand extends BaseCommand {
 
     public static examples: string[] = [
         `Run a relay
-$ ark-json-rpc relay:run
+$ exchange-json-rpc relay:run
 `,
     ];
 

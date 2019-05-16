@@ -9,10 +9,10 @@ export class StopCommand extends BaseCommand {
 
     public static examples: string[] = [
         `Stop the relay
-$ ark-json-rpc relay:stop
+$ exchange-json-rpc relay:stop
 `,
         `Stop the relay daemon
-$ ark-json-rpc relay:stop --daemon
+$ exchange-json-rpc relay:stop --daemon
 `,
     ];
 

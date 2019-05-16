@@ -9,7 +9,7 @@ export class StartCommand extends BaseCommand {
 
     public static examples: string[] = [
         `Run a relay with a pm2 daemon
-$ ark-json-rpc relay:start --network=mainnet
+$ exchange-json-rpc relay:start --network=mainnet
 `,
     ];
 

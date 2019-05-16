@@ -153,10 +153,10 @@ export abstract class BaseCommand extends Command {
     }
 
     protected getProcessName(token: string): string {
-        return `${token}-json-rpc`;
+        return `${token}-exchange-json-rpc`;
     }
 
     private getEnvPaths(flags: CommandFlags): Paths {
-        return envPaths(flags.token, { suffix: "ark-json-rpc" });
+        return envPaths(flags.token, { suffix: "exchange-json-rpc" });
     }
 }

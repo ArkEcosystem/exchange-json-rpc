@@ -5,7 +5,7 @@ class Database {
 
     public init(path: string) {
         this.database = new Keyv({
-            uri: `sqlite://${path}/json-rpc.sqlite`,
+            uri: `sqlite://${path}/exchange-json-rpc.sqlite`,
         });
     }
 

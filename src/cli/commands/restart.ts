@@ -8,7 +8,7 @@ export class RestartCommand extends BaseCommand {
 
     public static examples: string[] = [
         `Restart the relay
-$ ark-json-rpc relay:restart
+$ exchange-json-rpc relay:restart
 `,
     ];
 
