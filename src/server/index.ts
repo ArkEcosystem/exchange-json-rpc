@@ -18,6 +18,7 @@ export async function startServer(options: Record<string, string | number | bool
 
     if (!options.allowRemote) {
         await server.register({
+            // @ts-ignore
             plugin: whitelist,
             options: {
                 whitelist: (options.whitelist as string).split(","),
