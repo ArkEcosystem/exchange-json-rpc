@@ -4,7 +4,7 @@ import { generateMnemonic } from "bip39";
 import { IWallet } from "../interfaces";
 import { database } from "../services/database";
 import { network } from "../services/network";
-import { decryptWIF, getBIP38Wallet } from "./utils";
+import { buildTransaction, decryptWIF, getBIP38Wallet } from "./utils";
 
 export const methods = [
     {
@@ -111,17 +111,11 @@ export const methods = [
     {
         name: "transactions.create",
         async method(params: { recipientId: string; amount: string; vendorField?: string; passphrase: string }) {
-            const transactionBuilder = Transactions.BuilderFactory.transfer()
-                .recipientId(params.recipientId)
-                .amount(params.amount);
+            let transaction: Interfaces.ITransactionData;
 
-            if (params.vendorField) {
-                transactionBuilder.vendorField(params.vendorField);
-            }
-
-            const transaction: Interfaces.ITransactionData = transactionBuilder.sign(params.passphrase).getStruct();
-
-            if (!Transactions.Verifier.verifyHash(transaction)) {
+            try {
+                transaction = await buildTransaction(params, "sign");
+            } catch (error) {
                 return Boom.badData();
             }
 
@@ -186,17 +180,11 @@ export const methods = [
                     return Boom.notFound(`User ${params.userId} could not be found.`);
                 }
 
-                const transactionBuilder = Transactions.BuilderFactory.transfer()
-                    .recipientId(params.recipientId)
-                    .amount(params.amount);
+                let transaction: Interfaces.ITransactionData;
 
-                if (params.vendorField) {
-                    transactionBuilder.vendorField(params.vendorField);
-                }
-
-                const transaction: Interfaces.ITransactionData = transactionBuilder.signWithWif(wallet.wif).getStruct();
-
-                if (!Transactions.Verifier.verifyHash(transaction)) {
+                try {
+                    transaction = await buildTransaction({ ...params, ...{ passphrase: wallet.wif } }, "signWithWif");
+                } catch (error) {
                     return Boom.badData();
                 }
 

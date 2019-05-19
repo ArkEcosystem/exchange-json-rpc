@@ -8,7 +8,7 @@ import { methods } from "./methods";
 
 export async function startServer(options: Record<string, string | number | boolean>): Promise<Server> {
     if (options.allowRemote) {
-        logger.warn("exchange-json-rpc server allows remote connections, this is a potential security risk");
+        logger.warn("Server allows remote connections. This is a potential security risk!");
     }
 
     const server = new Server({
@@ -39,7 +39,7 @@ export async function startServer(options: Record<string, string | number | bool
 
         await server.start();
 
-        logger.info(`exchange-json-rpc Server running on ${server.info.uri}`);
+        logger.info(`Server running on ${server.info.uri}`);
     } catch (error) {
         logger.error(error.message);
 
