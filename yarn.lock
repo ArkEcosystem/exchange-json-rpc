@@ -212,7 +212,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@faustbrian/dato@^0.3.0", "@faustbrian/dato@^0.3.1":
+"@faustbrian/dato@^0.3.0":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@faustbrian/dato/-/dato-0.3.1.tgz#6c0c13572990d36789fa021090fcedbdcb90f7d4"
   integrity sha512-SQlwbui9oPB9F/eQktI8t7S5/bkmJLLsb/oTZDa6Fj0qnFdTeq7vqrZuu9osbiZ3ev5+nUcNQrNMpRrz/Wv56g==
@@ -484,15 +484,16 @@
     "@hapi/bourne" "1.x.x"
     "@hapi/hoek" "6.x.x"
 
-"@hapist/json-rpc@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@hapist/json-rpc/-/json-rpc-0.1.0.tgz#5319bd57b11393b42116f1d18654fb9d28ae68f8"
-  integrity sha512-W62IzNAndJ6QQvrFPxWko7wqh/pkAyL20NKHnUnlLKyZtwsyXrvvneXevZfHAyOekdHYHVnjKNXiG4kCoPgZQQ==
+"@hapist/json-rpc@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hapist/json-rpc/-/json-rpc-0.2.0.tgz#466370516e81e2af00161901defb30a18606e064"
+  integrity sha512-/xNZA/pry8uZQRsBlNV/Fk4kVqEZWQB4i92VcfoZhoBgP+BuHpbBHAKoD6p9I6OzNBx+itMa/XZoR+klk69aWg==
   dependencies:
     "@hapi/boom" "^7.4.2"
     "@hapi/hapi" "^18.3.1"
-    ajv "^6.10.0"
+    "@hapi/joi" "^15.0.3"
     dlv "^1.1.2"
+    dset "^2.0.1"
     media-type "^0.3.1"
 
 "@hapist/whitelist@^0.1.0":
@@ -2181,6 +2182,11 @@ dateformat@^3.0.3:
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
+dayjs@^1.8.14:
+  version "1.8.14"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.14.tgz#43e4f62830c2c3342c3fcd25934dc9162dbe6f38"
+  integrity sha512-AVhDmRTe541iWirnoeFSSDDGvCT6HWaNQ4z2WmmzXMGZj6ph6ydao2teKq/eUtR43GPJXlYFD+C/SotG1P9wUQ==
+
 debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -2363,6 +2369,11 @@ dot-prop@^4.1.0:
   integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
   dependencies:
     is-obj "^1.0.0"
+
+dset@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/dset/-/dset-2.0.1.tgz#a15fff3d1e4d60ac0c95634625cbd5441a76deb1"
+  integrity sha512-nI29OZMRYq36hOcifB6HTjajNAAiBKSXsyWZrq+VniusseuP2OpNlTiYgsaNRSGvpyq5Wjbc2gQLyBdTyWqhnQ==
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -5512,10 +5523,18 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
   integrity sha512-MtEC1TqN0EU5nephaJ4rAtThHtC86dNN9qCuEhtshvpVBkAW5ZO7BASN9REnF9eoXGcRub+pFuKEpOHE+HbEMw==
 
-prompts@^2.0.1, prompts@^2.0.4:
+prompts@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.0.4.tgz#179f9d4db3128b9933aa35f93a800d8fce76a682"
   integrity sha512-HTzM3UWp/99A0gk51gAegwo1QRYA7xjcZufMNe33rCclFszUYAuHe1fIN/3ZmiHeGPkUsNaRyQm1hHOfM0PKxA==
+  dependencies:
+    kleur "^3.0.2"
+    sisteransi "^1.0.0"
+
+prompts@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.1.0.tgz#bf90bc71f6065d255ea2bdc0fe6520485c1b45db"
+  integrity sha512-+x5TozgqYdOwWsQFZizE/Tra3fKvAoy037kOyU6cgz84n8f6zxngLOV4O32kTwt9FcLCxAqw0P/c8rOr9y+Gfg==
   dependencies:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
