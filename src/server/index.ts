@@ -1,4 +1,4 @@
-import { Types } from "@arkecosystem/crypto";
+import { Types, Validation } from "@arkecosystem/crypto";
 import { Server } from "@hapi/hapi";
 import * as rpc from "@hapist/json-rpc";
 import * as whitelist from "@hapist/whitelist";
@@ -54,15 +54,8 @@ export async function startServer(options: Record<string, string | number | bool
                 },
                 validate(data: object, schema: object) {
                     try {
-                        const ajv = new Ajv({
-                            $data: true,
-                            extendRefs: true,
-                            removeAdditional: true,
-                        });
-
-                        ajv.validate(schema, data);
-
-                        return { value: data, error: ajv.errors !== null ? ajv.errorsText() : null };
+                        const { error } = Validation.validator.validate(schema, data);
+                        return { value: data, error: error ? error : null };
                     } catch (error) {
                         return { value: null, error: error.stack };
                     }
