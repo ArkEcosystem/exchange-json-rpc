@@ -1,4 +1,4 @@
-import { dato } from "@faustbrian/dato";
+import dayjs from "dayjs";
 import Table from "cli-table3";
 import prettyBytes from "pretty-bytes";
 import prettyMs from "pretty-ms";
@@ -35,7 +35,7 @@ export class StatusCommand extends BaseCommand {
                 app.pm2_env.version,
                 app.pm2_env.status,
                 // @ts-ignore
-                prettyMs(dato().diff(app.pm2_env.pm_uptime)),
+                prettyMs(dayjs().diff(app.pm2_env.pm_uptime)),
                 `${app.monit.cpu}%`,
                 prettyBytes(app.monit.memory),
             ]);
