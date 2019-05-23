@@ -1,5 +1,6 @@
 import "jest-extended";
 
+import { Identities } from "@arkecosystem/crypto";
 import { Server } from "@hapi/hapi";
 import { launchServer, sendRequest } from "./__support__";
 
@@ -18,12 +19,12 @@ describe("Wallets", () => {
         });
 
         it("should fail to get information about the given wallet", async () => {
-            const response = await sendRequest("wallets.info", {
-                address: "fake",
-            });
+            const address: string = Identities.Address.fromPassphrase(Math.random().toString(36));
+
+            const response = await sendRequest("wallets.info", { address });
 
             expect(response.body.error.code).toBe(404);
-            expect(response.body.error.message).toBe("Wallet fake could not be found.");
+            expect(response.body.error.message).toBe(`Wallet ${address} could not be found.`);
         });
     });
 
@@ -38,12 +39,12 @@ describe("Wallets", () => {
         });
 
         it("should fail to get transactions for the given wallet", async () => {
-            const response = await sendRequest("wallets.transactions", {
-                address: "fake",
-            });
+            const address: string = Identities.Address.fromPassphrase(Math.random().toString(36));
+
+            const response = await sendRequest("wallets.transactions", { address });
 
             expect(response.body.error.code).toBe(404);
-            expect(response.body.error.message).toBe("Wallet fake could not be found.");
+            expect(response.body.error.message).toBe(`Wallet ${address} could not be found.`);
         });
     });
 

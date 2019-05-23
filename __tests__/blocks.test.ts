@@ -26,10 +26,14 @@ describe("Blocks", () => {
         });
 
         it("should fail to get the block information", async () => {
-            const response = await sendRequest("blocks.info", { id: "fake" });
+            const response = await sendRequest("blocks.info", {
+                id: "66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362",
+            });
 
             expect(response.body.error.code).toBe(404);
-            expect(response.body.error.message).toBe("Block fake could not be found.");
+            expect(response.body.error.message).toBe(
+                "Block 66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362 could not be found.",
+            );
         });
     });
 
@@ -43,10 +47,14 @@ describe("Blocks", () => {
         });
 
         it("should fail to get the block transactions", async () => {
-            const response = await sendRequest("blocks.transactions", { id: "fake" });
+            const response = await sendRequest("blocks.transactions", {
+                id: "66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362",
+            });
 
             expect(response.body.error.code).toBe(404);
-            expect(response.body.error.message).toBe("Block fake could not be found.");
+            expect(response.body.error.message).toBe(
+                "Block 66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362 could not be found.",
+            );
         });
     });
 });
