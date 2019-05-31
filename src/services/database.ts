@@ -34,11 +34,6 @@ class Database {
         );
     }
 
-    public disconnect(): void {
-        this.database.close();
-        this.database = undefined;
-    }
-
     public async get<T = any>(key: string): Promise<T> {
         const row = this.database
             .prepare(
@@ -62,10 +57,6 @@ class Database {
 
     public async set<T = any>(key: string, value: T): Promise<void> {
         this.database.exec(this.table.replace({ key, value }).toString());
-    }
-
-    public flush(): void {
-        this.database.exec(`DELETE FROM keyv;`);
     }
 }
 
