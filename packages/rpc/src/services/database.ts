@@ -5,8 +5,8 @@ class Database {
     private database: BetterSqlite3.Database;
     private table: any;
 
-    public connect(path: string) {
-        this.database = new BetterSqlite3(`${path}/exchange-json-rpc.sqlite`);
+    public connect(file: string) {
+        this.database = new BetterSqlite3(file);
 
         sql.setDialect("sqlite");
 
