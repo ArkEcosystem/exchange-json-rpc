@@ -21,7 +21,7 @@ export async function startServer(options: Record<string, string | number | bool
             // @ts-ignore
             plugin: whitelist,
             options: {
-                whitelist: (options.whitelist as string).split(","),
+                whitelist: options.whitelist,
             },
         });
     }

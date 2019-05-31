@@ -1,4 +1,5 @@
 import BetterSqlite3 from "better-sqlite3";
+import { ensureFileSync } from "fs-extra";
 import sql from "sql";
 
 class Database {
@@ -6,6 +7,8 @@ class Database {
     private table: any;
 
     public connect(file: string) {
+        ensureFileSync(file);
+
         this.database = new BetterSqlite3(file);
 
         sql.setDialect("sqlite");
