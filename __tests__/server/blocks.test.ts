@@ -1,7 +1,7 @@
 import "jest-extended";
 
 import { Server } from "@hapi/hapi";
-import { launchServer, sendRequest } from "./__support__";
+import { launchServer, sendRequest } from "../__support__";
 
 let server: Server;
 beforeAll(async () => (server = await launchServer()));
