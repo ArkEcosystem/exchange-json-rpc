@@ -1,5 +1,6 @@
 import BetterSqlite3 from "better-sqlite3";
 import { ensureFileSync } from "fs-extra";
+import JSONB from "json-buffer";
 import sql from "sql";
 
 class Database {
@@ -52,14 +53,16 @@ class Database {
         }
 
         try {
-            return JSON.parse(row.value);
+            return JSONB.parse(row.value).value;
         } catch (err) {
-            return row.value;
+            return undefined;
         }
     }
 
     public async set<T = any>(key: string, value: T): Promise<void> {
-        this.database.exec(this.table.replace({ key: this.getKeyPrefix(key), value }).toString());
+        this.database.exec(
+            this.table.replace({ key: this.getKeyPrefix(key), value: JSONB.stringify({ value }) }).toString(),
+        );
     }
 
     private getKeyPrefix(key: string): string {
