@@ -20,7 +20,7 @@ $ exchange-json-rpc run
     public async run(): Promise<void> {
         const { flags, paths } = await this.parseWithNetwork(RunCommand);
 
-        database.init(paths.data);
+        database.connect(paths.data);
 
         await startServer(flags);
     }

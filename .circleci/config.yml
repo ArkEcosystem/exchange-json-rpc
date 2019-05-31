@@ -34,9 +34,27 @@ jobs:
                   key: v1-dependencies-{{ checksum "yarn.lock" }}
             - run: yarn test
             - run: ./node_modules/.bin/codecov
+    node-12:
+        docker:
+            - image: circleci/node:12
+        working_directory: ~/exchange-json-rpc
+        steps:
+            - checkout
+            - restore_cache:
+                  keys:
+                      - v1-dependencies-{{ checksum "yarn.lock" }}
+                      - v1-dependencies-
+            - run: yarn install
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: v1-dependencies-{{ checksum "yarn.lock" }}
+            - run: yarn test
+            - run: ./node_modules/.bin/codecov
 workflows:
     version: 2
     build_and_test:
         jobs:
             - node-10
             - node-11
+            - node-12
