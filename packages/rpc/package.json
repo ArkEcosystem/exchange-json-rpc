@@ -1,13 +1,11 @@
 {
     "name": "@arkecosystem/exchange-json-rpc",
-    "version": "1.0.0-next.0",
+    "version": "1.0.0-next.1",
     "description": "A JSON-RPC 2.0 specification compliant server for Exchanges to interact with the ARK Blockchain.",
     "license": "MIT",
     "author": "Brian Faust <brian@ark.io>",
     "files": [
-        "/bin",
-        "/dist",
-        "/oclif.manifest.json"
+        "/dist"
     ],
     "main": "dist/index",
     "types": "dist/index",
@@ -22,8 +20,6 @@
         "exchange-json-rpc": "./bin/run",
         "format": "yarn lint && yarn prettier",
         "lint": "../../node_modules/tslint/bin/tslint -c ../../tslint.json -p ../../tslint-config.json './src/**/*.ts' --fix",
-        "prepack": "../../node_modules/.bin/oclif-dev manifest && npm shrinkwrap",
-        "postpack": "rm -f oclif.manifest.json",
         "prepublishOnly": "yarn build",
         "prettier": "prettier --write \"./*.{ts,js,json,md}\" \"./src/**/*.{ts,js,json,md}\" \"./__tests__/**/*.{ts,js,json,md}\"",
         "test": "jest --forceExit --runInBand"
