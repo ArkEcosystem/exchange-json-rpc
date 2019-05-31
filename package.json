@@ -15,11 +15,11 @@
         "exchange-json-rpc": "./bin/run"
     },
     "scripts": {
-        "exchange-json-rpc": "./bin/run",
         "build": "yarn clean && yarn compile",
         "build:watch": "yarn clean && yarn compile -w",
         "clean": "del dist",
         "compile": "./node_modules/typescript/bin/tsc",
+        "exchange-json-rpc": "./bin/run",
         "format": "yarn lint && yarn prettier",
         "lint": "./node_modules/tslint/bin/tslint -c ./tslint.json -p ./tslint-config.json './src/**/*.ts' --fix",
         "prepack": "./node_modules/.bin/oclif-dev manifest && npm shrinkwrap",
