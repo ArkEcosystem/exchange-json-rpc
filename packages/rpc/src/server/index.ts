@@ -63,17 +63,11 @@ export async function startServer(options: Record<string, string | number | bool
         },
     });
 
-    try {
-        await network.init({ network: options.network as Types.NetworkName, peer: options.peer as string });
+    await network.init({ network: options.network as Types.NetworkName, peer: options.peer as string });
 
-        await server.start();
+    await server.start();
 
-        logger.info(`Server running on ${server.info.uri}`);
-    } catch (error) {
-        logger.error(error.message);
-
-        process.exit(1);
-    }
+    logger.info(`Server running on ${server.info.uri}`);
 
     return server;
 }

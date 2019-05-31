@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
 import Table from "cli-table3";
+import dayjs from "dayjs";
 import prettyBytes from "pretty-bytes";
 import prettyMs from "pretty-ms";
 import { processManager } from "../process-manager";

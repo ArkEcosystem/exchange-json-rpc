@@ -1,6 +1,4 @@
-// import { flags } from "@oclif/command";
-import { startServer } from "../../server";
-import { database } from "../../services/database";
+import { start } from "@arkecosystem/exchange-json-rpc";
 import { CommandFlags } from "../types";
 import { BaseCommand } from "./command";
 
@@ -20,8 +18,6 @@ $ exchange-json-rpc run
     public async run(): Promise<void> {
         const { flags, paths } = await this.parseWithNetwork(RunCommand);
 
-        database.connect(paths.data);
-
-        await startServer(flags);
+        await start({ database: `${paths.data}/exchange-json-rpc.sqlite`, server: flags });
     }
 }
