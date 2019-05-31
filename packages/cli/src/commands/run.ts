@@ -18,7 +18,7 @@ $ exchange-json-rpc run
     public async run(): Promise<void> {
         const { flags, paths } = await this.parseWithNetwork(RunCommand);
 
-        flags.whitelist = flags.whitelist.split(".");
+        flags.whitelist = flags.whitelist.split(",");
 
         await start({ database: `${paths.data}/exchange-json-rpc.sqlite`, server: flags });
     }
