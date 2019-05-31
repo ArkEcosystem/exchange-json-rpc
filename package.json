@@ -12,7 +12,8 @@
         "lint": "./node_modules/tslint/bin/tslint -c ./tslint.json -p ./tslint-config.json './packages/**/*/src/**/*.ts' --fix",
         "format": "yarn lint && yarn prettier",
         "prettier": "prettier --write \"./*.{ts,js,json,md}\" \"./packages/**/*.{ts,js,json,md}\" \"./__tests__/**/*.{ts,js,json,md}\"",
-        "test": "yarn lerna run test"
+        "test": "yarn lerna run test",
+        "version": "cross-env-shell ./scripts/version.sh"
     },
     "devDependencies": {
         "@sindresorhus/tsconfig": "^0.3.0",
@@ -21,6 +22,7 @@
         "@types/prettier": "^1.16.4",
         "@types/rimraf": "^2.0.2",
         "codecov": "^3.5.0",
+        "cross-env": "^5.2.0",
         "del-cli": "^1.1.0",
         "husky": "^2.3.0",
         "jest": "^24.8.0",
