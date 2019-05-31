@@ -1,6 +1,6 @@
 {
     "name": "@arkecosystem/exchange-json-rpc",
-    "version": "1.0.0-next.4",
+    "version": "1.0.0-next.5",
     "description": "A JSON-RPC 2.0 specification compliant server for Exchanges to interact with the ARK Blockchain.",
     "license": "MIT",
     "author": "Brian Faust <brian@ark.io>",
