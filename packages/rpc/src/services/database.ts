@@ -42,7 +42,7 @@ class Database {
             .prepare(
                 this.table
                     .select(this.table.value)
-                    .where({ key })
+                    .where({ key: this.getKeyPrefix(key) })
                     .toString(),
             )
             .get();
@@ -59,7 +59,11 @@ class Database {
     }
 
     public async set<T = any>(key: string, value: T): Promise<void> {
-        this.database.exec(this.table.replace({ key, value }).toString());
+        this.database.exec(this.table.replace({ key: this.getKeyPrefix(key), value }).toString());
+    }
+
+    private getKeyPrefix(key: string): string {
+        return `keyv:${key}`;
     }
 }
 
