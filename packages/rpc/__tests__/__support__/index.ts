@@ -6,7 +6,7 @@ import { startServer } from "../../src/server";
 import { database } from "../../src/services/database";
 
 export const launchServer = async (): Promise<Server> => {
-    database.connect(tmpdir());
+    database.connect(`${tmpdir()}/db.sqlite`);
 
     return startServer({
         host: "0.0.0.0",

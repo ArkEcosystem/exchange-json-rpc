@@ -25,8 +25,7 @@
         "prepack": "../../node_modules/.bin/oclif-dev manifest && npm shrinkwrap",
         "postpack": "rm -f oclif.manifest.json",
         "prepublishOnly": "yarn build",
-        "prettier": "prettier --write \"./*.{ts,js,json,md}\" \"./src/**/*.{ts,js,json,md}\" \"./__tests__/**/*.{ts,js,json,md}\"",
-        "test": "jest --forceExit --runInBand"
+        "prettier": "prettier --write \"./*.{ts,js,json,md}\" \"./src/**/*.{ts,js,json,md}\" \"./__tests__/**/*.{ts,js,json,md}\""
     },
     "jest": {
         "bail": true,
@@ -96,35 +95,14 @@
     },
     "devDependencies": {
         "@oclif/dev-cli": "^1.22.0",
-        "@sindresorhus/tsconfig": "^0.3.0",
-        "@types/boom": "^7.2.1",
         "@types/execa": "^0.9.0",
         "@types/fast-levenshtein": "^0.0.1",
         "@types/fs-extra": "^7.0.0",
-        "@types/hapi__boom": "^7.4.0",
-        "@types/hapi__hapi": "^18.2.1",
-        "@types/jest": "^24.0.13",
         "@types/lodash.minby": "^4.6.6",
-        "@types/lodash.sample": "^4.2.6",
-        "@types/pino": "^5.20.0",
-        "@types/prettier": "^1.16.4",
         "@types/pretty-bytes": "^5.1.0",
         "@types/pretty-ms": "^4.0.0",
         "@types/prompts": "^2.4.0",
-        "@types/rimraf": "^2.0.2",
-        "@types/semver": "^6.0.0",
-        "@types/uuid": "^3.4.4",
-        "@types/wif": "^2.0.1",
-        "codecov": "^3.5.0",
-        "del-cli": "^2.0.0",
-        "jest": "^24.8.0",
-        "jest-extended": "^0.11.1",
-        "prettier": "^1.17.1",
-        "rimraf": "^2.6.3",
-        "ts-jest": "^24.0.2",
-        "tslint": "^5.17.0",
-        "tslint-config-prettier": "^1.18.0",
-        "typescript": "^3.5.1"
+        "@types/semver": "^6.0.0"
     },
     "engines": {
         "node": ">=10.x"

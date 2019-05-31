@@ -6,7 +6,7 @@ import { database } from "../../src/services/database";
 it("should set and get a value", async () => {
     removeSync(`${__dirname}/exchange-json-rpc.sqlite`);
 
-    await database.connect(__dirname);
+    await database.connect(`${__dirname}/exchange-json-rpc.sqlite`);
 
     expect(await database.get("key1")).toBeUndefined();
 
