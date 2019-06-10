@@ -80,7 +80,7 @@ class Network {
     private async getPeers(): Promise<IPeer[]> {
         const { data } = await this.sendRequest("get", "peers", {}, 0, true);
 
-        if (!data.length) {
+        if (!data || !data.length) {
             return this.seeds;
         }
 
