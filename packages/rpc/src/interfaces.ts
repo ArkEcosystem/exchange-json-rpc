@@ -27,3 +27,8 @@ export interface IWallet {
     keys: Interfaces.IKeyPair;
     wif: string;
 }
+
+export interface IPeer {
+    ip: string;
+    port: number;
+}
