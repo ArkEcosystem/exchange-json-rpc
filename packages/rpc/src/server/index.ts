@@ -67,7 +67,7 @@ export async function startServer(options: Record<string, string | number | bool
 
     await server.start();
 
-    logger.info(`Server running on ${server.info.uri}`);
+    logger.info(`Exchange JSON-RPC running on ${server.info.uri}`);
 
     return server;
 }
