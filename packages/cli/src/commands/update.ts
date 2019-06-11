@@ -8,7 +8,7 @@ import { CommandFlags } from "../types";
 import { BaseCommand } from "./command";
 
 export class UpdateCommand extends BaseCommand {
-    public static description: string = "Update the exchange-json-rpc installation";
+    public static description: string = "Update the JSON-RPC installation";
 
     public static flags: CommandFlags = {
         ...BaseCommand.flagsNetwork,
