@@ -14,27 +14,27 @@ export abstract class BaseCommand extends Command {
         network: flags.string({
             description: "the name of the network that should be used",
             options: validNetworks,
-            default: "devnet",
+            default: "mainnet",
         }),
         token: flags.string({
             description: "the name of the token that should be used",
             default: "ark",
         }),
         host: flags.string({
-            description: "the name of the network that should be used",
+            description: "the host that should be used to expose the RPC",
             default: "0.0.0.0",
         }),
         port: flags.integer({
-            description: "the name of the network that should be used",
+            description: "the port that should be used to expose the RPC",
             default: 8080,
         }),
         allowRemote: flags.boolean({
-            description: "the name of the network that should be used",
+            description: "allow remote connections which are filtered by a whitelist",
             allowNo: true,
             default: false,
         }),
         whitelist: flags.string({
-            description: "the name of the network that should be used",
+            description: "a comma separated list of IPs that can access the RPC",
             default: "127.0.0.1,::ffff:127.0.0.1",
         }),
         peer: flags.string({

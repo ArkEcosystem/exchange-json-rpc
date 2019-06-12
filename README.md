@@ -22,6 +22,8 @@ yarn global add @arkecosystem/exchange-json-rpc
 
 ## Usage
 
+> All commands support a `-h` flag to show help for the specified command.
+
 ```sh
 $ exchange-json-rpc
 A JSON-RPC 2.0 specification compliant server for Exchanges to interact with the ARK Blockchain.
@@ -44,6 +46,62 @@ COMMANDS
   status        Show the JSON-RPC status
   stop          Stop the JSON-RPC
   update        Update the exchange-json-rpc installation
+```
+
+### `start`
+
+> Start the JSON-RPC
+
+```sh
+exchange-json-rpc start
+```
+
+### `restart`
+
+> Restart the JSON-RPC
+
+```sh
+exchange-json-rpc restart
+```
+
+### `stop`
+
+> Stop the JSON-RPC
+
+```sh
+exchange-json-rpc stop
+```
+
+### `run`
+
+> Run the JSON-RPC without pm2 **(exits on CTRL+C)**
+
+```sh
+exchange-json-rpc run
+```
+
+### `status`
+
+> Show the JSON-RPC status
+
+```sh
+exchange-json-rpc status
+```
+
+### `update`
+
+> Update the JSON-RPC installation
+
+```sh
+exchange-json-rpc update
+```
+
+### `log`
+
+> Show the log
+
+```sh
+exchange-json-rpc log
 ```
 
 ## Security
