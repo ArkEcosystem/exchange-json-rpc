@@ -17,7 +17,7 @@ The Exchange JSON-RPC is only maintained for exchanges, as the name suggests. **
 ## Installation
 
 ```bash
-yarn global add @arkecosystem/exchange-json-rpc
+yarn global add @arkecosystem/exchange-json-rpc-cli
 ```
 
 ## Usage
