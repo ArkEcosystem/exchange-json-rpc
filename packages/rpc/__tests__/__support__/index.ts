@@ -20,13 +20,12 @@ export const launchServer = async (): Promise<Server> => {
 export const sendRequest = async (method, params: any = {}) => {
     const id: string = uuid();
     const response = await got.post("http://localhost:8080/", {
-        body: {
-            // @ts-ignore
+        body: JSON.stringify({
             jsonrpc: "2.0",
             id,
             method,
             params,
-        },
+        }),
     });
 
     response.body = JSON.parse(response.body);
