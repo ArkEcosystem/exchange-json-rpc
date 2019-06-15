@@ -62,8 +62,7 @@
         "watchman": false
     },
     "dependencies": {
-        "@arkecosystem/core-utils": "^2.4.0",
-        "@arkecosystem/crypto": "^2.4.0",
+        "@arkecosystem/crypto": "^2.4 || ^2.5",
         "@hapi/boom": "^7.4.2",
         "@hapi/hapi": "^18.3.1",
         "@hapist/json-rpc": "^0.2.0",
@@ -71,6 +70,7 @@
         "better-sqlite3": "^5.4.0",
         "bip39": "^3.0.2",
         "fs-extra": "^8.0.1",
+        "got": "^9.6.0",
         "is-reachable": "^3.1.0",
         "json-buffer": "^3.0.1",
         "lodash.sample": "^4.2.1",
@@ -82,6 +82,7 @@
     },
     "devDependencies": {
         "@types/fs-extra": "^7.0.0",
+        "@types/got": "^9.4.4",
         "@types/hapi__boom": "^7.4.0",
         "@types/hapi__hapi": "^18.2.1",
         "@types/lodash.sample": "^4.2.6",
