@@ -20,6 +20,18 @@ export abstract class BaseCommand extends Command {
             description: "the name of the token that should be used",
             default: "ark",
         }),
+    };
+
+    public static flagsConfiguration: Record<string, object> = {
+        network: flags.string({
+            description: "the name of the network that should be used",
+            options: validNetworks,
+            default: "mainnet",
+        }),
+        token: flags.string({
+            description: "the name of the token that should be used",
+            default: "ark",
+        }),
         host: flags.string({
             description: "the host that should be used to expose the RPC",
             default: "0.0.0.0",

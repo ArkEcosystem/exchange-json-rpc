@@ -11,15 +11,12 @@ export class StopCommand extends BaseCommand {
         `Stop the JSON-RPC
 $ exchange-json-rpc stop
 `,
-        `Stop the JSON-RPC daemon
-$ exchange-json-rpc stop --daemon
-`,
     ];
 
     public static flags: CommandFlags = {
         ...BaseCommand.flagsNetwork,
-        daemon: flags.boolean({
-            description: "stop the process or daemon",
+        kill: flags.boolean({
+            description: "kill the process or daemon",
         }),
     };
 
@@ -35,7 +32,7 @@ $ exchange-json-rpc stop --daemon
 
             cli.action.start(`Stopping ${processName}`);
 
-            processManager[flags.daemon ? "delete" : "stop"](processName);
+            processManager[flags.kill ? "delete" : "stop"](processName);
         } catch (error) {
             this.error(error.message);
         } finally {

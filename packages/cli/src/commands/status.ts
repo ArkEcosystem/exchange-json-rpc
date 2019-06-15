@@ -1,3 +1,4 @@
+import { flags } from "@oclif/parser";
 import Table from "cli-table3";
 import dayjs from "dayjs";
 import prettyBytes from "pretty-bytes";
@@ -14,7 +15,10 @@ export class StatusCommand extends BaseCommand {
     public static examples: string[] = [`$ exchange-json-rpc status`];
 
     public static flags: CommandFlags = {
-        ...BaseCommand.flagsNetwork,
+        token: flags.string({
+            description: "the name of the token that should be used",
+            default: "ark",
+        }),
     };
 
     public async run(): Promise<void> {
