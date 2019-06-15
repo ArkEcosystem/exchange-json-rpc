@@ -32,6 +32,10 @@ class Network {
 
             logger.info(`Sending request on "${this.opts.network}" to "${uri}"`);
 
+            if (opts.body && typeof opts.body !== "string") {
+                opts.body = JSON.stringify(opts.body);
+            }
+
             const { body } = await got[method](uri, {
                 ...opts,
                 ...{

@@ -82,7 +82,6 @@
     },
     "devDependencies": {
         "@types/fs-extra": "^7.0.0",
-        "@types/got": "^9.4.4",
         "@types/hapi__boom": "^7.4.0",
         "@types/hapi__hapi": "^18.2.1",
         "@types/lodash.sample": "^4.2.6",

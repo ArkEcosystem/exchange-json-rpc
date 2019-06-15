@@ -30,7 +30,7 @@ export const sendRequest = async (method, params: any = {}) => {
 
     response.body = JSON.parse(response.body);
 
-    await expect(response.status).toBe(200);
+    await expect(response.statusCode).toBe(200);
     await expect(response.body.jsonrpc).toBe("2.0");
     await expect(response.body.id).toBe(id);
 
