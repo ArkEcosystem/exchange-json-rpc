@@ -1,5 +1,5 @@
-import { httpie } from "@arkecosystem/core-utils";
 import { Server } from "@hapi/hapi";
+import got from "got";
 import { tmpdir } from "os";
 import uuid from "uuid/v4";
 import { startServer } from "../../src/server";
@@ -19,16 +19,18 @@ export const launchServer = async (): Promise<Server> => {
 
 export const sendRequest = async (method, params: any = {}) => {
     const id: string = uuid();
-    const response = await httpie.post("http://localhost:8080/", {
-        body: {
+    const response = await got.post("http://localhost:8080/", {
+        body: JSON.stringify({
             jsonrpc: "2.0",
             id,
             method,
             params,
-        },
+        }),
     });
 
-    await expect(response.status).toBe(200);
+    response.body = JSON.parse(response.body);
+
+    await expect(response.statusCode).toBe(200);
     await expect(response.body.jsonrpc).toBe("2.0");
     await expect(response.body.id).toBe(id);
 

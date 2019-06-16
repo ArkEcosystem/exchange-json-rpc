@@ -1,5 +1,5 @@
-import { httpie } from "@arkecosystem/core-utils";
 import { Managers, Types } from "@arkecosystem/crypto";
+import got from "got";
 import isReachable from "is-reachable";
 import sample from "lodash.sample";
 import { IPeer } from "../interfaces";
@@ -32,7 +32,11 @@ class Network {
 
             logger.info(`Sending request on "${this.opts.network}" to "${uri}"`);
 
-            return (await httpie[method](uri, {
+            if (opts.body && typeof opts.body !== "string") {
+                opts.body = JSON.stringify(opts.body);
+            }
+
+            const { body } = await got[method](uri, {
                 ...opts,
                 ...{
                     headers: {
@@ -41,7 +45,9 @@ class Network {
                     },
                     timeout: 3000,
                 },
-            })).body;
+            });
+
+            return JSON.parse(body);
         } catch (error) {
             logger.error(error.message);
 
@@ -102,9 +108,11 @@ class Network {
     }
 
     private async loadSeeds(): Promise<void> {
-        const { body: seeds } = await httpie.get(
+        const { body } = await got.get(
             `https://raw.githubusercontent.com/ArkEcosystem/peers/master/${this.opts.network}.json`,
         );
+
+        const seeds = JSON.parse(body);
 
         if (!seeds.length) {
             throw new Error("No seeds found");

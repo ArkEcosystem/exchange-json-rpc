@@ -15,6 +15,7 @@ $ exchange-json-rpc start --network=mainnet
 
     public static flags: CommandFlags = {
         ...BaseCommand.flagsNetwork,
+        ...BaseCommand.flagsConfiguration,
         daemon: flags.boolean({
             description: "start the process as a daemon",
             default: true,

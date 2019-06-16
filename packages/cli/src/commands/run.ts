@@ -13,6 +13,7 @@ $ exchange-json-rpc run
 
     public static flags: CommandFlags = {
         ...BaseCommand.flagsNetwork,
+        ...BaseCommand.flagsConfiguration,
     };
 
     public async run(): Promise<void> {
