@@ -259,11 +259,10 @@ export const methods = [
         name: "wallets.transactions",
         async method(params: { offset?: number; address: string }) {
             const response = await network.sendGET({
-                path: "transactions",
+                path: `wallets/${params.address}/transactions`,
                 query: {
                     offset: params.offset || 0,
                     orderBy: "timestamp:desc",
-                    ownerId: params.address,
                 },
             });
 
