@@ -2,6 +2,7 @@
     "extends": "@sindresorhus/tsconfig",
     "compilerOptions": {
         "alwaysStrict": false,
+        "esModuleInterop": true,
         "incremental": true,
         "lib": ["es2018"],
         "module": "commonjs",

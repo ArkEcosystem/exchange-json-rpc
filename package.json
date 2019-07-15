@@ -16,25 +16,25 @@
         "version": "cross-env-shell ./scripts/version.sh"
     },
     "devDependencies": {
-        "@sindresorhus/tsconfig": "^0.3.0",
-        "@types/jest": "^24.0.13",
-        "@types/node": "^12.0.2",
+        "@sindresorhus/tsconfig": "^0.4.0",
+        "@types/jest": "^24.0.15",
+        "@types/node": "^12.6.2",
         "@types/prettier": "^1.16.4",
         "@types/rimraf": "^2.0.2",
         "codecov": "^3.5.0",
         "cross-env": "^5.2.0",
-        "del-cli": "^1.1.0",
-        "husky": "^2.3.0",
+        "del-cli": "^2.0.0",
+        "husky": "^3.0.0",
         "jest": "^24.8.0",
-        "jest-extended": "^0.11.1",
-        "lerna": "^3.14.1",
-        "lint-staged": "^8.1.7",
-        "prettier": "^1.17.1",
+        "jest-extended": "^0.11.2",
+        "lerna": "^3.15.0",
+        "lint-staged": "^9.2.0",
+        "prettier": "^1.18.2",
         "rimraf": "^2.6.3",
         "ts-jest": "^24.0.2",
-        "tslint": "^5.16.0",
+        "tslint": "^5.18.0",
         "tslint-config-prettier": "^1.18.0",
-        "typescript": "^3.4.5"
+        "typescript": "^3.5.3"
     },
     "workspaces": [
         "packages/*"
