@@ -75,7 +75,7 @@ class Network {
         const reachable: boolean = await isReachable(`${peer.ip}:${peer.port}`);
 
         if (!reachable) {
-            logger.warn(`${peer} is unresponsive. Choosing new peer.`);
+            logger.warn(`${peer.ip}:${peer.port} is unresponsive. Choosing new peer.`);
 
             return this.getPeer();
         }

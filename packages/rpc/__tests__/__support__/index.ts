@@ -5,6 +5,8 @@ import uuid from "uuid/v4";
 import { startServer } from "../../src/server";
 import { database } from "../../src/services/database";
 
+jest.setTimeout(10000);
+
 export const launchServer = async (): Promise<Server> => {
     database.connect(`${tmpdir()}/db.sqlite`);
 
