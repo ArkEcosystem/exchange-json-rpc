@@ -10,6 +10,8 @@
 [![Codecov](https://badgen.now.sh/codecov/c/github/ArkEcosystem/exchange-json-rpc)](https://codecov.io/gh/ArkEcosystem/exchange-json-rpc)
 [![License: MIT](https://badgen.now.sh/badge/license/MIT/green)](https://opensource.org/licenses/MIT)
 
+> Lead Maintainer: [Brian Faust](https://github.com/faustbrian)
+
 ## Disclaimer
 
 The Exchange JSON-RPC is only maintained for exchanges, as the name suggests. **We do not offer any support or guidance unless you are an Exchange in which case you most likely will already be in touch with us.**
@@ -139,7 +141,7 @@ If you discover a security vulnerability within this package, please send an e-m
 
 ## Credits
 
-This project exists thanks to all the people who [contribute](../../../../contributors).
+This project exists thanks to all the people who [contribute](../../contributors).
 
 ## License
 
