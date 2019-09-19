@@ -63,7 +63,11 @@ export async function startServer(options: Record<string, string | number | bool
         },
     });
 
-    await network.init({ network: options.network as Types.NetworkName, peer: options.peer as string });
+    await network.init({
+        network: options.network as Types.NetworkName,
+        peer: options.peer as string,
+        peerPort: options.peerPort as number,
+    });
 
     await server.start();
 
