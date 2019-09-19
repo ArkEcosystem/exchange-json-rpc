@@ -32,6 +32,7 @@ export const buildTransaction = async (
         amount: string;
         vendorField?: string;
         passphrase: string;
+        fee?: string;
     },
     method: "sign" | "signWithWif",
 ): Promise<Interfaces.ITransactionData> => {
@@ -43,18 +44,22 @@ export const buildTransaction = async (
         transactionBuilder.vendorField(params.vendorField);
     }
 
-    try {
-        const { data } = await network.sendGET({
-            path: "node/fees",
-        });
+    if (params.fee) {
+        transactionBuilder.fee(params.fee);
+    } else {
+        try {
+            const { data } = await network.sendGET({
+                path: "node/fees",
+            });
 
-        const fee: string = data.find(({ type }) => type === 0).avg;
+            const fee: string = data.find(({ type }) => type === 0).avg;
 
-        if (fee && Number(fee) > 0) {
-            transactionBuilder.fee(fee);
+            if (fee && Number(fee) > 0) {
+                transactionBuilder.fee(fee);
+            }
+        } catch (error) {
+            logger.warn("Failed to retrieve the average fee.");
         }
-    } catch (error) {
-        logger.warn("Failed to retrieve the average fee.");
     }
 
     const transaction: Interfaces.ITransactionData = transactionBuilder[method](params.passphrase).getStruct();

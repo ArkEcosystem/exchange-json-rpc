@@ -104,13 +104,19 @@ export const methods = [
     },
     {
         name: "transactions.create",
-        async method(params: { recipientId: string; amount: string; vendorField?: string; passphrase: string }) {
+        async method(params: {
+            recipientId: string;
+            amount: string;
+            passphrase: string;
+            vendorField?: string;
+            fee?: string;
+        }) {
             let transaction: Interfaces.ITransactionData;
 
             try {
                 transaction = await buildTransaction(params, "sign");
             } catch (error) {
-                return Boom.badData();
+                return Boom.badData(error.message);
             }
 
             await database.set<Interfaces.ITransactionData>(transaction.id, transaction);
@@ -131,6 +137,9 @@ export const methods = [
                     type: "string",
                 },
                 vendorField: {
+                    type: "string",
+                },
+                fee: {
                     type: "string",
                 },
             },
@@ -166,6 +175,7 @@ export const methods = [
             recipientId: string;
             amount: string;
             vendorField?: string;
+            fee?: string;
         }) {
             try {
                 const wallet: IWallet = await getBIP38Wallet(params.userId, params.bip38);
@@ -200,6 +210,9 @@ export const methods = [
                     $ref: "address",
                 },
                 vendorField: {
+                    type: "string",
+                },
+                fee: {
                     type: "string",
                 },
                 bip38: {
