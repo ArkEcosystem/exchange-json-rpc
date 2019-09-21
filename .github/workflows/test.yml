@@ -3,13 +3,12 @@ name: Test
 on: [push]
 
 jobs:
-  build:
+  test:
+    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ubuntu-latest
-    
     strategy:
       matrix:
         node-version: [10.x, 11.x, 12.x]
-        
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
