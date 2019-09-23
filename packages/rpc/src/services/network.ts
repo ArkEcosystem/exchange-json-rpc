@@ -116,7 +116,7 @@ class Network {
     }
 
     private async loadSeedsFromPeer(): Promise<void> {
-        const { body } = await got.get(`http://${this.options.peer}/api/peers`);
+        const { body } = await got.get(`http://${this.options.peer}:${this.options.peerPort}/api/peers`);
 
         this.setSeeds(JSON.parse(body).data);
     }
