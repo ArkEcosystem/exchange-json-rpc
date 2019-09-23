@@ -6,15 +6,15 @@ import { IPeer } from "../interfaces";
 import { logger } from "./logger";
 
 class Network {
-    private opts: { network: string; peer: string };
+    private options: { network: Types.NetworkName; peer: string; peerPort: number };
     private seeds: IPeer[] = [];
 
-    public async init(opts: { network: Types.NetworkName; peer: string }): Promise<void> {
-        this.opts = opts;
+    public async init(options: { network: Types.NetworkName; peer: string; peerPort: number }): Promise<void> {
+        this.options = options;
 
-        Managers.configManager.setFromPreset(opts.network);
+        Managers.configManager.setFromPreset(options.network);
 
-        await this.loadSeeds();
+        await (options.peer ? this.loadSeedsFromPeer() : this.loadSeedsFromGithub());
     }
 
     public async sendGET({ path, query = {} }: { path: string; query?: Record<string, any> }) {
@@ -25,19 +25,19 @@ class Network {
         return this.sendRequest("post", path, { body });
     }
 
-    private async sendRequest(method: string, url: string, opts, tries: number = 0, useSeed: boolean = false) {
+    private async sendRequest(method: string, url: string, options, tries: number = 0, useSeed: boolean = false) {
         try {
             const peer: IPeer = await this.getPeer(useSeed);
             const uri: string = `http://${peer.ip}:${peer.port}/api/${url}`;
 
-            logger.info(`Sending request on "${this.opts.network}" to "${uri}"`);
+            logger.info(`Sending request on "${this.options.network}" to "${uri}"`);
 
-            if (opts.body && typeof opts.body !== "string") {
-                opts.body = JSON.stringify(opts.body);
+            if (options.body && typeof options.body !== "string") {
+                options.body = JSON.stringify(options.body);
             }
 
             const { body } = await got[method](uri, {
-                ...opts,
+                ...options,
                 ...{
                     headers: {
                         Accept: "application/vnd.core-api.v2+json",
@@ -58,13 +58,13 @@ class Network {
                 return undefined;
             }
 
-            return this.sendRequest(method, url, opts, tries);
+            return this.sendRequest(method, url, options, tries);
         }
     }
 
     private async getPeer(useSeed: boolean = false): Promise<IPeer> {
-        if (this.opts.peer) {
-            return { ip: this.opts.peer, port: 4003 };
+        if (this.options.peer) {
+            return { ip: this.options.peer, port: this.options.peerPort };
         }
 
         if (useSeed) {
@@ -107,19 +107,27 @@ class Network {
         return peers;
     }
 
-    private async loadSeeds(): Promise<void> {
+    private async loadSeedsFromGithub(): Promise<void> {
         const { body } = await got.get(
-            `https://raw.githubusercontent.com/ArkEcosystem/peers/master/${this.opts.network}.json`,
+            `https://raw.githubusercontent.com/ArkEcosystem/peers/master/${this.options.network}.json`,
         );
 
-        const seeds = JSON.parse(body);
+        this.setSeeds(JSON.parse(body));
+    }
 
+    private async loadSeedsFromPeer(): Promise<void> {
+        const { body } = await got.get(`http://${this.options.peer}/api/peers`);
+
+        this.setSeeds(JSON.parse(body).data);
+    }
+
+    private setSeeds(seeds: IPeer[]): void {
         if (!seeds.length) {
             throw new Error("No seeds found");
         }
 
         for (const seed of seeds) {
-            seed.port = 4003;
+            seed.port = this.options.peerPort;
         }
 
         this.seeds = seeds;
