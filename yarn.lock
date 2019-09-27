@@ -291,6 +291,13 @@
   dependencies:
     "@hapi/hoek" "6.x.x"
 
+"@hapi/boom@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-8.0.0.tgz#c814d73f0e5e81ff21e382347c210db9508b3de6"
+  integrity sha512-TAGixECpfIFL8e9yNuWDlftOh23ehd8oMR6/pzlv46tXr/ZhtEv6xK5ZPFiaPIsGZ8lP4RQj7OhE09dIYjw+Eg==
+  dependencies:
+    "@hapi/hoek" "8.x.x"
+
 "@hapi/bounce@1.x.x":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@hapi/bounce/-/bounce-1.3.1.tgz#7e0017300fa92b21bc6706590cac08f6085899e1"
