@@ -83,12 +83,16 @@ export const methods = [
                 return Boom.badData();
             }
 
-            await network.sendPOST({
+            const broadcast = await network.sendPOST({
                 path: "transactions",
                 body: {
                     transactions: [transaction],
                 },
             });
+
+            if (Object.keys(broadcast.errors || {}).length > 0) {
+                return Boom.badData(broadcast.errors[transaction.id][0].message);
+            }
 
             return transaction;
         },

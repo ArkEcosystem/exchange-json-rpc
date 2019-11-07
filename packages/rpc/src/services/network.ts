@@ -12,9 +12,11 @@ class Network {
     public async init(options: { network: Types.NetworkName; peer: string; peerPort: number }): Promise<void> {
         this.options = options;
 
+        await (options.peer ? this.loadSeedsFromPeer() : this.loadSeedsFromGithub());
+
         Managers.configManager.setFromPreset(options.network);
 
-        await (options.peer ? this.loadSeedsFromPeer() : this.loadSeedsFromGithub());
+        Managers.configManager.setHeight(await this.getHeight());
     }
 
     public async sendGET({ path, query = {} }: { path: string; query?: Record<string, any> }) {
@@ -23,6 +25,10 @@ class Network {
 
     public async sendPOST({ path, body = {} }: { path: string; body: Record<string, any> }) {
         return this.sendRequest("post", path, { body });
+    }
+
+    private async getHeight(): Promise<number> {
+        return (await this.sendGET({ path: "blockchain" })).data.block.height;
     }
 
     private async sendRequest(method: string, url: string, options, tries: number = 0, useSeed: boolean = false) {
