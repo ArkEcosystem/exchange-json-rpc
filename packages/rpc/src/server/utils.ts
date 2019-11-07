@@ -49,7 +49,10 @@ export const buildTransaction = async (
         transactionBuilder.fee(params.fee);
     } else {
         // Get the nonce of the sender wallet
-        const senderAddress: string = Identities.Address.fromPassphrase(params.passphrase);
+        const senderAddress: string =
+            method === "sign"
+                ? Identities.Address.fromPassphrase(params.passphrase)
+                : Identities.Address.fromPublicKey(Identities.PublicKey.fromWIF(params.passphrase));
 
         try {
             const { data } = await network.sendGET({
