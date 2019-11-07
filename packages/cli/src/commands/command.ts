@@ -52,6 +52,10 @@ export abstract class BaseCommand extends Command {
         peer: flags.string({
             description: "the peer you want to use for communication, defaults to random network peers",
         }),
+        maxLatency: flags.integer({
+            description: "the maximum allowed latency of a peer, defaults to 300ms",
+            default: 300,
+        }),
         peerPort: flags.integer({
             description: "the public API port of the peer you want to use to load seeds",
             default: 4003,
