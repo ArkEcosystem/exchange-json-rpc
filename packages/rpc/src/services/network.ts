@@ -13,7 +13,7 @@ class Network {
     public async init(options: { network: Types.NetworkName; peer: string; maxLatency: number, peerPort: number }): Promise<void> {
         this.options = options;
 
-        constconst networkOrHost: string = this.options.peer
+        const networkOrHost: string = this.options.peer
                 ? `http://${this.options.peer}:${this.options.peerPort}/api/peers`
                 : this.options.network;
 
