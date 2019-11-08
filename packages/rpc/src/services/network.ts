@@ -13,13 +13,15 @@ class Network {
     public async init(options: { network: Types.NetworkName; peer: string; maxLatency: number, peerPort: number }): Promise<void> {
         this.options = options;
 
-        const networkOrHost: string = this.options.peer
+        constconst networkOrHost: string = this.options.peer
                 ? `http://${this.options.peer}:${this.options.peerPort}/api/peers`
                 : this.options.network;
 
         this.peerDiscovery = (await PeerDiscovery.new({ networkOrHost })).withLatency(options.maxLatency);
 
         Managers.configManager.setFromPreset(options.network);
+
+        Managers.configManager.setHeight(await this.getHeight());
     }
 
     public async sendGET({ path, query = {} }: { path: string; query?: Record<string, any> }) {
@@ -30,7 +32,11 @@ class Network {
         return this.sendRequest("post", path, { body });
     }
 
-    private async sendRequest(method: string, url: string, options, tries: number = 0) {
+    private async getHeight(): Promise<number> {
+        return (await this.sendGET({ path: "blockchain" })).data.block.height;
+    }
+
+    private async sendRequest(method: string, url: string, options, tries: number = 0, useSeed: boolean = false) {
         try {
             const peer: IPeer = await this.getPeer();
             const uri: string = `http://${peer.ip}:${peer.port}/api/${url}`;
