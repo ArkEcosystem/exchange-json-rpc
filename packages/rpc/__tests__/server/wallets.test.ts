@@ -34,8 +34,8 @@ describe("Wallets", () => {
                 address: "D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax",
             });
 
-            expect(response.body.result.count).toBe(100);
-            expect(response.body.result.data).toHaveLength(100);
+            expect(response.body.result.data).toBeArray();
+            expect(response.body.result.data.length).toBeGreaterThanOrEqual(100);
         });
 
         it("should fail to get transactions for the given wallet", async () => {
