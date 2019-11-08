@@ -1,4 +1,5 @@
-import { Crypto, Identities, Interfaces, Managers, Transactions } from "@arkecosystem/crypto";
+import { Crypto, Identities, Interfaces, Managers, Transactions, Utils } from "@arkecosystem/crypto";
+import { notStrictEqual } from "assert";
 import wif from "wif";
 import { IWallet } from "../interfaces";
 import { database } from "../services/database";
@@ -47,6 +48,29 @@ export const buildTransaction = async (
     if (params.fee) {
         transactionBuilder.fee(params.fee);
     } else {
+        // Get the nonce of the sender wallet
+        const senderAddress: string =
+            method === "sign"
+                ? Identities.Address.fromPassphrase(params.passphrase)
+                : Identities.Address.fromPublicKey(Identities.PublicKey.fromWIF(params.passphrase));
+
+        try {
+            const { data } = await network.sendGET({
+                path: `wallets/${senderAddress}`,
+            });
+
+            notStrictEqual(data.nonce, undefined);
+
+            transactionBuilder.nonce(
+                Utils.BigNumber.make(data.nonce)
+                    .plus(1)
+                    .toFixed(),
+            );
+        } catch (error) {
+            throw new Error(`Failed to retrieve the nonce for ${senderAddress}.`);
+        }
+
+        // Get the average fee from the network
         try {
             const { data } = await network.sendGET({
                 path: "node/fees",

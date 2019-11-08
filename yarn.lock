@@ -31,34 +31,41 @@
     tiny-glob "^0.2.6"
     wif "^2.0.6"
 
-"@arkecosystem/crypto@^2.4 || ^2.5 || ^2.5.0-next.0 || ^2.6.0-next.0":
-  version "2.5.26"
-  resolved "https://registry.yarnpkg.com/@arkecosystem/crypto/-/crypto-2.5.26.tgz#35c8f5fcc3cdb7e444ca4f320f27852c292ee735"
-  integrity sha512-NOn5/RhswxuMR86xqiviQsEZa2wBkmCfrwrpC52/GsCkoUCcyC8AbkXvb7tJSgxQ96k39h3jVZbWCLBYSTCIjw==
+"@arkecosystem/crypto@^2.6.0-next.0":
+  version "2.6.0-next.4"
+  resolved "https://registry.yarnpkg.com/@arkecosystem/crypto/-/crypto-2.6.0-next.4.tgz#46ca7eaa5e983a2ec42612a9aeb825f4ef4df953"
+  integrity sha512-Tp/QnHscBQXMjjy4yFjqxJolH9j9g9G2OxwYPwHF5iDk2a2kEyoNZamqB7+dqHFN87QtzNPtGkYz08cErri7+A==
   dependencies:
-    "@hapi/joi" "^15.1.0"
+    "@arkecosystem/utils" "0.8.3"
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"
     bcrypto "^4.1.0"
-    bignumber.js "^9.0.0"
     bip32 "^2.0.3"
     bip39 "^3.0.2"
     browserify-aes "^1.2.0"
-    bs58 "^4.0.1"
-    bs58check "^2.1.2"
+    bstring "^0.3.9"
     buffer-xor "^2.0.2"
     bytebuffer "^5.0.1"
     dayjs "^1.8.15"
     deepmerge "^4.0.0"
-    lodash.camelcase "^4.3.0"
+    fast-memoize "^2.5.1"
+    ipaddr.js "^1.9.0"
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
     lodash.sumby "^4.6.0"
-    node-forge "^0.9.0"
-    otplib "^11.0.1"
-    pluralize "^8.0.0"
+    long "~3"
     tiny-glob "^0.2.6"
     wif "^2.0.6"
+
+"@arkecosystem/utils@0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@arkecosystem/utils/-/utils-0.8.3.tgz#1ab84a463a5bf4df4788da9e4c92bc592e9bcfa6"
+  integrity sha512-uRqMLW7qrPDGpYFpJ+LgtfM4ecSZJzcERZBZ8rjIdC9IgAHPDJaXRaoXw5pHw5YopD2LGyUvfMw9EPze15hfTw==
+  dependencies:
+    "@hapi/bourne" "^1.3.2"
+    fast-copy "^2.0.3"
+    fast-deep-equal "^2.0.1"
+    fast-sort "^1.5.6"
 
 "@babel/code-frame@^7.0.0":
   version "7.0.0"
@@ -2491,6 +2498,15 @@ bsert@~0.0.10:
   resolved "https://registry.yarnpkg.com/bsert/-/bsert-0.0.10.tgz#231ac82873a1418c6ade301ab5cd9ae385895597"
   integrity sha512-NHNwlac+WPy4t2LoNh8pXk8uaIGH3NSaIUbTTRXGpE2WEbq0te/tDykYHkFK57YKLPjv/aGHmbqvnGeVWDz57Q==
 
+bstring@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/bstring/-/bstring-0.3.9.tgz#dc50294b54e9e767c07ca5592795dcc59ef1bf2e"
+  integrity sha512-D95flI7SXL+UsQi9mW+hH+AK2AFfafIJi+3GbbyTAWMe2FqwR9keBxsjGiGd/JM+77Y9WsC+M4EhZVNVcym9jw==
+  dependencies:
+    bsert "~0.0.10"
+    loady "~0.0.1"
+    nan "^2.13.1"
+
 btoa-lite@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/btoa-lite/-/btoa-lite-1.0.0.tgz#337766da15801210fdd956c22e9c6891ab9d0337"
@@ -3823,6 +3839,11 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
+fast-copy@^2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/fast-copy/-/fast-copy-2.0.4.tgz#ab54785f86d5817a8963340464ef099e7d7f3e94"
+  integrity sha512-KCJlUfEnzC66TUsoQtreImd/W11I52pXHp404uSzvPsU68WT/XJi3EmkqeGtPsKzJ1AXkVqqtyI4q3LiPtityw==
+
 fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
@@ -3862,6 +3883,11 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.4:
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
+fast-memoize@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/fast-memoize/-/fast-memoize-2.5.1.tgz#c3519241e80552ce395e1a32dcdde8d1fd680f5d"
+  integrity sha512-xdmw296PCL01tMOXx9mdJSmWY29jQgxyuZdq0rEHMu+Tpe1eOEtCycoG6chzlcrWsNgpZP7oL8RiQr7+G6Bl6g==
+
 fast-redact@^1.4.4:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/fast-redact/-/fast-redact-1.5.0.tgz#302892f566750c4f5eec7b830bfc9bc473484034"
@@ -3871,6 +3897,11 @@ fast-safe-stringify@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.6.tgz#04b26106cc56681f51a044cfc0d76cf0008ac2c2"
   integrity sha512-q8BZ89jjc+mz08rSxROs8VsrBBcn1SIw1kq9NjolL509tkABRk9io01RAjSaEv1Xb2uFLt8VtRiZbGp5H8iDtg==
+
+fast-sort@^1.5.6:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/fast-sort/-/fast-sort-1.6.0.tgz#68c6d94ce309ead19d562014159902c80c68d0a0"
+  integrity sha512-sjV6dxWdHs14cef7GzJgCWSOagw57cUBYMey+seWeOsU0HgMf2g4Wkdflv65X/8E4UWptUcq9EZ3YqSXUnUy9Q==
 
 fastq@^1.6.0:
   version "1.6.0"
@@ -6331,7 +6362,7 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.12.1, nan@^2.13.2:
+nan@^2.12.1, nan@^2.13.1, nan@^2.13.2:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
@@ -6400,11 +6431,6 @@ node-forge@^0.8.5:
   version "0.8.5"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.8.5.tgz#57906f07614dc72762c84cef442f427c0e1b86ee"
   integrity sha512-vFMQIWt+J/7FLNyKouZ9TazT74PRV3wgv9UT4cRjC8BffxFbKXkgIWR42URCPSnHm/QDz6BOlb2Q0U4+VQT67Q==
-
-node-forge@^0.9.0:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.9.1.tgz#775368e6846558ab6676858a4d8c6e8d16c677b5"
-  integrity sha512-G6RlQt5Sb4GMBzXvhfkeFmbqR6MzhtnT7VTHuLadjkii3rdYHNdw0m8zA4BTxVIh68FicCQ2NSUANpsqkr9jvQ==
 
 node-gyp@^4.0.0:
   version "4.0.0"
