@@ -85,10 +85,7 @@ class Network {
     }
 
     private async getPeers(): Promise<IPeer[]> {
-        const peers: IPeer[] = this.peerDiscovery
-            .findPeersWithPlugin("core-api");
-
-        return peers;
+        return this.peerDiscovery.findPeersWithPlugin("core-api");
     }
 }
 
