@@ -30,6 +30,8 @@ describe("Wallets", () => {
 
     describe("POST wallets.transactions", () => {
         it("should get the transactions for the given wallet", async () => {
+            jest.setTimeout(20000);
+
             const response = await sendRequest("wallets.transactions", {
                 address: "D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax",
             });
