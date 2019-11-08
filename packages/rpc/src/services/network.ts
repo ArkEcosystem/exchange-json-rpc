@@ -8,7 +8,7 @@ import { logger } from "./logger";
 
 class Network {
     private options: { network: Types.NetworkName; peer: string; maxLatency: number, peerPort: number };
-    private peerDiscovery: any = null;
+    private peerDiscovery!: PeerDiscovery;
 
     public async init(options: { network: Types.NetworkName; peer: string; maxLatency: number, peerPort: number }): Promise<void> {
         this.options = options;
