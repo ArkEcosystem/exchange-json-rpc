@@ -16,7 +16,7 @@
         "version": "cross-env-shell ./scripts/version.sh"
     },
     "devDependencies": {
-        "@sindresorhus/tsconfig": "^0.5.0",
+        "@sindresorhus/tsconfig": "^0.6.0",
         "@types/jest": "^24.0.15",
         "@types/node": "^12.6.2",
         "@types/prettier": "^1.16.4",
