@@ -76,7 +76,7 @@ export const buildTransaction = async (
                 path: "node/fees",
             });
 
-            const fee: string = data.find(({ type }) => type === 0).avg;
+            const fee: string = data[1].transfer.avg;
 
             if (fee && Number(fee) > 0) {
                 transactionBuilder.fee(fee);
