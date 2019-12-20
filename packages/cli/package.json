@@ -91,7 +91,7 @@
         "pretty-ms": "^5.0.0",
         "prompts": "^2.1.0",
         "read-last-lines": "^1.7.1",
-        "semver": "^6.1.1"
+        "semver": "^7.0.0"
     },
     "devDependencies": {
         "@oclif/dev-cli": "^1.22.0",
