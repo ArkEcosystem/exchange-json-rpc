@@ -81,7 +81,7 @@
         "cli-ux": "^5.2.1",
         "dayjs": "^1.8.14",
         "env-paths": "^2.2.0",
-        "execa": "^1.0.0",
+        "execa": "^4.0.0",
         "fast-levenshtein": "^2.0.6",
         "fs-extra": "^8.0.1",
         "latest-version": "^5.1.0",
