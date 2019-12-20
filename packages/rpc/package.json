@@ -83,7 +83,8 @@
         "@types/lodash.sample": "^4.2.6",
         "@types/pino": "^5.20.0",
         "@types/uuid": "^3.4.4",
-        "@types/wif": "^2.0.1"
+        "@types/wif": "^2.0.1",
+        "nock": "^11.7.0"
     },
     "engines": {
         "node": ">=10.x"
