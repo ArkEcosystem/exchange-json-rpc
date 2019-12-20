@@ -39,9 +39,11 @@ describe("Blocks", () => {
             nock(/\d+\.\d+\.\d+\.\d+/)
                 .get("/api/blocks?orderBy=height%3Adesc&limit=1")
                 .reply(200, {
-                    data: {
-                        id: "eadea76d383aab4f5b807a1954ecb792b9a5f3b3c901e351627a91681713728c",
-                    },
+                    data: [
+                        {
+                            id: "eadea76d383aab4f5b807a1954ecb792b9a5f3b3c901e351627a91681713728c",
+                        },
+                    ],
                 });
 
             const response = await sendRequest("blocks.latest");
@@ -51,7 +53,15 @@ describe("Blocks", () => {
     });
 
     describe("POST blocks.info", () => {
-        xit("should get the block information", async () => {
+        it("should get the block information", async () => {
+            nock(/\d+\.\d+\.\d+\.\d+/)
+                .get("/api/blocks/13114381566690093367")
+                .reply(200, {
+                    data: {
+                        id: "13114381566690093367",
+                    },
+                });
+
             const response = await sendRequest("blocks.info", {
                 id: "13114381566690093367",
             });
@@ -59,7 +69,16 @@ describe("Blocks", () => {
             expect(response.body.result.id).toBe("13114381566690093367");
         });
 
-        xit("should fail to get the block information", async () => {
+        it("should fail to get the block information", async () => {
+            nock(/\d+\.\d+\.\d+\.\d+/)
+                .get("/api/blocks/66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362")
+                .reply(404, {
+                    statusCode: 404,
+                    error: "Not Found",
+                    message:
+                        "Block 66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362 could not be found.",
+                });
+
             const response = await sendRequest("blocks.info", {
                 id: "66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362",
             });
@@ -72,7 +91,26 @@ describe("Blocks", () => {
     });
 
     describe("POST blocks.transactions", () => {
-        xit("should get the block transactions", async () => {
+        it("should get the block transactions", async () => {
+            nock(/\d+\.\d+\.\d+\.\d+/)
+                .get("/api/blocks/13114381566690093367/transactions?orderBy=timestamp%3Adesc")
+                .reply(200, {
+                    meta: {
+                        totalCountIsEstimate: false,
+                        count: 0,
+                        pageCount: 1,
+                        totalCount: 0,
+                        next: null,
+                        previous: null,
+                        self:
+                            "/api/blocks/99816b312b7d84f5f2be2567f067a143102fc2e6a631b32fc130e92121733f1c/transactions?transform=true&page=1&limit=100",
+                        first:
+                            "/api/blocks/99816b312b7d84f5f2be2567f067a143102fc2e6a631b32fc130e92121733f1c/transactions?transform=true&page=1&limit=100",
+                        last: null,
+                    },
+                    data: new Array(52).fill(0),
+                });
+
             const response = await sendRequest("blocks.transactions", {
                 id: "13114381566690093367",
             });
@@ -80,7 +118,18 @@ describe("Blocks", () => {
             expect(response.body.result.data).toHaveLength(52);
         });
 
-        xit("should fail to get the block transactions", async () => {
+        it("should fail to get the block transactions", async () => {
+            nock(/\d+\.\d+\.\d+\.\d+/)
+                .get(
+                    "/api/blocks/66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362/transactions?orderBy=timestamp%3Adesc",
+                )
+                .reply(404, {
+                    statusCode: 404,
+                    error: "Not Found",
+                    message:
+                        "Block 66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362 could not be found.",
+                });
+
             const response = await sendRequest("blocks.transactions", {
                 id: "66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362",
             });
