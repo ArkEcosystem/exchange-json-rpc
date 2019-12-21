@@ -106,11 +106,12 @@ describe("Wallets", () => {
             expect(response.body.result.data.length).toBeGreaterThanOrEqual(100);
         });
 
-        xit("should fail to get transactions for the given wallet", async () => {
+        it("should fail to get transactions for the given wallet", async () => {
             const address: string = Identities.Address.fromPassphrase(Math.random().toString(36));
 
             nock(/\d+\.\d+\.\d+\.\d+/)
-                .get(`/api/wallets/${address}/transactions`)
+                .get(`/api/wallets/${address}/transactions?offset=0&orderBy=timestamp%3Adesc`)
+                .thrice()
                 .reply(404, {
                     data: {
                         statusCode: 404,
@@ -127,7 +128,7 @@ describe("Wallets", () => {
     });
 
     describe("POST wallets.create", () => {
-        xit("should create a new wallet", async () => {
+        it("should create a new wallet", async () => {
             nock(/\d+\.\d+\.\d+\.\d+/)
                 .get("/api/wallets/D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax/transactions")
                 .reply(200, {
@@ -152,7 +153,7 @@ describe("Wallets", () => {
             .toString("hex");
 
         describe("create", () => {
-            xit("should create a new wallet", async () => {
+            it("should create a new wallet", async () => {
                 nock(/\d+\.\d+\.\d+\.\d+/)
                     .get("/api/wallets/D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax/transactions")
                     .reply(200, {
@@ -173,7 +174,7 @@ describe("Wallets", () => {
         });
 
         describe("info", () => {
-            xit("should find the wallet for the given userId", async () => {
+            it("should find the wallet for the given userId", async () => {
                 const response = await sendRequest(server, "wallets.bip38.info", {
                     bip38: "this is a top secret passphrase",
                     userId,
@@ -185,7 +186,7 @@ describe("Wallets", () => {
                 expect(response.body.result.wif).toBe(bip38wif);
             });
 
-            xit("should fail to find the wallet for the given userId", async () => {
+            it("should fail to find the wallet for the given userId", async () => {
                 const response = await sendRequest(server, "wallets.bip38.info", {
                     bip38: "invalid",
                     userId: "123456789",
