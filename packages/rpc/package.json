@@ -18,44 +18,7 @@
         "lint": "../../node_modules/tslint/bin/tslint -c ../../tslint.json -p ../../tslint-config.json './src/**/*.ts' --fix",
         "prepublishOnly": "yarn build",
         "prettier": "prettier --write \"./*.{ts,js,json,md}\" \"./src/**/*.{ts,js,json,md}\" \"./__tests__/**/*.{ts,js,json,md}\"",
-        "test": "jest --forceExit --runInBand"
-    },
-    "jest": {
-        "bail": true,
-        "collectCoverage": true,
-        "collectCoverageFrom": [
-            "src/**/*.ts",
-            "!src/index.ts",
-            "!**/node_modules/**"
-        ],
-        "coverageDirectory": "<rootDir>/.coverage",
-        "coverageReporters": [
-            "json",
-            "lcov",
-            "text",
-            "clover",
-            "html"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ],
-        "setupFilesAfterEnv": [
-            "jest-extended"
-        ],
-        "testEnvironment": "node",
-        "testMatch": [
-            "**/*.test.ts"
-        ],
-        "transform": {
-            "^.+\\.tsx?$": "ts-jest"
-        },
-        "verbose": true,
-        "watchman": false
+        "test": "jest"
     },
     "dependencies": {
         "@arkecosystem/crypto": "^2.6.0-next.0",
