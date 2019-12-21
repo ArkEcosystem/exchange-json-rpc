@@ -9,7 +9,7 @@ let server: Server;
 
 beforeAll(async () => (server = await launchServer()));
 
-afterEach(() => jest.resetAllMocks());
+afterEach(() => jest.restoreAllMocks());
 
 describe("Wallets", () => {
     nock(/\d+\.\d+\.\d+\.\d+/)

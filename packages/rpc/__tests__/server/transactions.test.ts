@@ -10,7 +10,7 @@ let server: Server;
 
 beforeAll(async () => (server = await launchServer()));
 
-afterEach(() => jest.resetAllMocks());
+afterEach(() => jest.restoreAllMocks());
 
 const verifyTransaction = (data): boolean => Transactions.TransactionFactory.fromData(data).verify();
 
@@ -78,6 +78,12 @@ describe("Transactions", () => {
                     },
                 },
             },
+        })
+        .get(/\api\/wallets\/.*/)
+        .reply(200, {
+            data: {
+                nonce: "1",
+            },
         });
 
     describe("POST transactions.info", () => {
@@ -119,14 +125,6 @@ describe("Transactions", () => {
 
     describe("POST transactions.create", () => {
         it("should create a new transaction and verify", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
-                .get(`/api/wallets/D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib`)
-                .reply(200, {
-                    data: {
-                        nonce: "1",
-                    },
-                });
-
             const response = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
@@ -137,7 +135,7 @@ describe("Transactions", () => {
             expect(verifyTransaction(response.body.result)).toBeTrue();
         });
 
-        xit("should create a new transaction with a vendor field and verify", async () => {
+        it("should create a new transaction with a vendor field and verify", async () => {
             const response = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 passphrase: "this is a top secret passphrase",
@@ -150,7 +148,7 @@ describe("Transactions", () => {
             expect(verifyTransaction(response.body.result)).toBeTrue();
         });
 
-        xit("should return 422 if it fails to verify the transaction", async () => {
+        it("should return 422 if it fails to verify the transaction", async () => {
             const spyVerify = jest.spyOn(Transactions.Verifier, "verifyHash").mockImplementation(() => false);
 
             const response = await sendRequest(server, "transactions.create", {
@@ -165,12 +163,20 @@ describe("Transactions", () => {
     });
 
     describe("POST transactions.broadcast", () => {
-        xit("should broadcast the transaction", async () => {
+        it("should broadcast the transaction", async () => {
             const transaction = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
                 passphrase: "this is a top secret passphrase",
             });
+
+            nock(/\d+\.\d+\.\d+\.\d+/)
+                .post("/api/transactions")
+                .reply(200, {
+                    data: {
+                        accepted: [transaction.id],
+                    },
+                });
 
             const response = await sendRequest(server, "transactions.broadcast", {
                 id: transaction.body.result.id,
@@ -179,7 +185,7 @@ describe("Transactions", () => {
             expect(verifyTransaction(response.body.result)).toBeTrue();
         });
 
-        xit("should fail to broadcast the transaction", async () => {
+        it("should fail to broadcast the transaction", async () => {
             const response = await sendRequest(server, "transactions.broadcast", {
                 id: "e4311204acf8a86ba833e494f5292475c6e9e0913fc455a12601b4b6b55818d8",
             });
@@ -190,7 +196,7 @@ describe("Transactions", () => {
             );
         });
 
-        xit("should return 422 if it fails to verify the transaction", async () => {
+        it("should return 422 if it fails to verify the transaction", async () => {
             const transaction = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
@@ -213,7 +219,7 @@ describe("Transactions", () => {
     describe("POST transactions.bip38.create", () => {
         const userId: string = randomBytes(32).toString("hex");
 
-        xit("should create a new transaction", async () => {
+        it("should create a new transaction", async () => {
             await sendRequest(server, "wallets.bip38.create", {
                 bip38: "this is a top secret passphrase",
                 userId,
@@ -230,7 +236,7 @@ describe("Transactions", () => {
             expect(verifyTransaction(response.body.result)).toBeTrue();
         });
 
-        xit("should create a new transaction with a vendor field", async () => {
+        it("should create a new transaction with a vendor field", async () => {
             const response = await sendRequest(server, "transactions.bip38.create", {
                 bip38: "this is a top secret passphrase",
                 userId,
@@ -244,7 +250,7 @@ describe("Transactions", () => {
             expect(verifyTransaction(response.body.result)).toBeTrue();
         });
 
-        xit("should fail to create a new transaction", async () => {
+        it("should fail to create a new transaction", async () => {
             const response = await sendRequest(server, "transactions.bip38.create", {
                 bip38: "this is a top secret passphrase",
                 userId: "123456789",
@@ -256,7 +262,7 @@ describe("Transactions", () => {
             expect(response.body.error.message).toBe("User 123456789 could not be found.");
         });
 
-        xit("should return 422 if it fails to verify the transaction", async () => {
+        it("should return 422 if it fails to verify the transaction", async () => {
             const spyVerify: jest.SpyInstance = jest
                 .spyOn(Transactions.Verifier, "verifyHash")
                 .mockImplementation(() => false);

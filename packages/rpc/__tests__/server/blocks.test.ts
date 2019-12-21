@@ -8,7 +8,7 @@ let server: Server;
 
 beforeAll(async () => (server = await launchServer()));
 
-afterEach(() => jest.resetAllMocks());
+afterEach(() => jest.restoreAllMocks());
 
 describe("Blocks", () => {
     nock(/\d+\.\d+\.\d+\.\d+/)
