@@ -38,6 +38,46 @@ describe("Transactions", () => {
                 },
                 supply: "14625386000000004",
             },
+        })
+        .get("/api/node/fees")
+        .reply(200, {
+            meta: {
+                days: 7,
+            },
+            data: {
+                "1": {
+                    transfer: {
+                        avg: "4714424",
+                        max: "10000000",
+                        min: "333000",
+                        sum: "188576954",
+                    },
+                    vote: {
+                        avg: "68453150",
+                        max: "100000000",
+                        min: "1000000",
+                        sum: "2122047658",
+                    },
+                    ipfs: {
+                        avg: "500000000",
+                        max: "500000000",
+                        min: "500000000",
+                        sum: "500000000",
+                    },
+                    multiPayment: {
+                        avg: "9986191",
+                        max: "10000000",
+                        min: "6480000",
+                        sum: "11064700000",
+                    },
+                    htlcLock: {
+                        avg: "10000000",
+                        max: "10000000",
+                        min: "10000000",
+                        sum: "30000000",
+                    },
+                },
+            },
         });
 
     describe("POST transactions.info", () => {
@@ -79,6 +119,14 @@ describe("Transactions", () => {
 
     describe("POST transactions.create", () => {
         it("should create a new transaction and verify", async () => {
+            nock(/\d+\.\d+\.\d+\.\d+/)
+                .get(`/api/wallets/D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib`)
+                .reply(200, {
+                    data: {
+                        nonce: "1",
+                    },
+                });
+
             const response = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
