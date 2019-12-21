@@ -6,8 +6,10 @@ import nock from "nock";
 import { launchServer, sendRequest } from "../__support__";
 
 let server: Server;
+
 beforeAll(async () => (server = await launchServer()));
-afterAll(async () => server.stop());
+
+afterEach(() => jest.resetAllMocks());
 
 describe("Wallets", () => {
     nock(/\d+\.\d+\.\d+\.\d+/)
@@ -45,7 +47,7 @@ describe("Wallets", () => {
                     },
                 });
 
-            const response = await sendRequest("wallets.info", {
+            const response = await sendRequest(server, "wallets.info", {
                 address: "D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax",
             });
 
@@ -57,6 +59,7 @@ describe("Wallets", () => {
 
             nock(/\d+\.\d+\.\d+\.\d+/)
                 .get(/.*/)
+                .thrice()
                 .reply(404, {
                     data: {
                         statusCode: 404,
@@ -65,7 +68,7 @@ describe("Wallets", () => {
                     },
                 });
 
-            const response = await sendRequest("wallets.info", { address });
+            const response = await sendRequest(server, "wallets.info", { address });
 
             expect(response.body.error.code).toBe(404);
             expect(response.body.error.message).toBe(`Wallet ${address} could not be found.`);
@@ -95,7 +98,7 @@ describe("Wallets", () => {
                     data: new Array(100).fill(0),
                 });
 
-            const response = await sendRequest("wallets.transactions", {
+            const response = await sendRequest(server, "wallets.transactions", {
                 address: "D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax",
             });
 
@@ -116,7 +119,7 @@ describe("Wallets", () => {
                     },
                 });
 
-            const response = await sendRequest("wallets.transactions", { address });
+            const response = await sendRequest(server, "wallets.transactions", { address });
 
             expect(response.body.error.code).toBe(404);
             expect(response.body.error.message).toBe(`Wallet ${address} could not be found.`);
@@ -131,7 +134,7 @@ describe("Wallets", () => {
                     data: new Array(100).fill(0),
                 });
 
-            const response = await sendRequest("wallets.create", {
+            const response = await sendRequest(server, "wallets.create", {
                 passphrase: "this is a top secret passphrase",
             });
 
@@ -156,7 +159,7 @@ describe("Wallets", () => {
                         data: new Array(100).fill(0),
                     });
 
-                const response = await sendRequest("wallets.bip38.create", {
+                const response = await sendRequest(server, "wallets.bip38.create", {
                     bip38: "this is a top secret passphrase",
                     userId,
                 });
@@ -171,7 +174,7 @@ describe("Wallets", () => {
 
         describe("info", () => {
             xit("should find the wallet for the given userId", async () => {
-                const response = await sendRequest("wallets.bip38.info", {
+                const response = await sendRequest(server, "wallets.bip38.info", {
                     bip38: "this is a top secret passphrase",
                     userId,
                 });
@@ -183,7 +186,7 @@ describe("Wallets", () => {
             });
 
             xit("should fail to find the wallet for the given userId", async () => {
-                const response = await sendRequest("wallets.bip38.info", {
+                const response = await sendRequest(server, "wallets.bip38.info", {
                     bip38: "invalid",
                     userId: "123456789",
                 });

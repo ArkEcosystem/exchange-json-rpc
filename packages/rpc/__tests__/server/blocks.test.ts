@@ -5,8 +5,10 @@ import nock from "nock";
 import { launchServer, sendRequest } from "../__support__";
 
 let server: Server;
+
 beforeAll(async () => (server = await launchServer()));
-afterAll(async () => server.stop());
+
+afterEach(() => jest.resetAllMocks());
 
 describe("Blocks", () => {
     nock(/\d+\.\d+\.\d+\.\d+/)
@@ -46,7 +48,7 @@ describe("Blocks", () => {
                     ],
                 });
 
-            const response = await sendRequest("blocks.latest");
+            const response = await sendRequest(server, "blocks.latest");
 
             expect(response.body.result.id).toBeString();
         });
@@ -62,7 +64,7 @@ describe("Blocks", () => {
                     },
                 });
 
-            const response = await sendRequest("blocks.info", {
+            const response = await sendRequest(server, "blocks.info", {
                 id: "13114381566690093367",
             });
 
@@ -72,6 +74,7 @@ describe("Blocks", () => {
         it("should fail to get the block information", async () => {
             nock(/\d+\.\d+\.\d+\.\d+/)
                 .get("/api/blocks/66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362")
+                .thrice()
                 .reply(404, {
                     statusCode: 404,
                     error: "Not Found",
@@ -79,7 +82,7 @@ describe("Blocks", () => {
                         "Block 66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362 could not be found.",
                 });
 
-            const response = await sendRequest("blocks.info", {
+            const response = await sendRequest(server, "blocks.info", {
                 id: "66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362",
             });
 
@@ -111,7 +114,7 @@ describe("Blocks", () => {
                     data: new Array(52).fill(0),
                 });
 
-            const response = await sendRequest("blocks.transactions", {
+            const response = await sendRequest(server, "blocks.transactions", {
                 id: "13114381566690093367",
             });
 
@@ -123,6 +126,7 @@ describe("Blocks", () => {
                 .get(
                     "/api/blocks/66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362/transactions?orderBy=timestamp%3Adesc",
                 )
+                .thrice()
                 .reply(404, {
                     statusCode: 404,
                     error: "Not Found",
@@ -130,7 +134,7 @@ describe("Blocks", () => {
                         "Block 66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362 could not be found.",
                 });
 
-            const response = await sendRequest("blocks.transactions", {
+            const response = await sendRequest(server, "blocks.transactions", {
                 id: "66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362",
             });
 
