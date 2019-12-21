@@ -6,7 +6,10 @@ import { logger } from "../services/logger";
 import { network } from "../services/network";
 import { methods } from "./methods";
 
-export async function startServer(options: Record<string, string | number | boolean>): Promise<Server> {
+export async function startServer(
+    options: Record<string, string | number | boolean>,
+    onlyCreate?: boolean,
+): Promise<Server> {
     if (options.allowRemote) {
         logger.warn("Server allows remote connections. This is a potential security risk!");
     }
@@ -70,9 +73,11 @@ export async function startServer(options: Record<string, string | number | bool
         peerPort: options.peerPort as number,
     });
 
-    await server.start();
+    if (!onlyCreate) {
+        await server.start();
 
-    logger.info(`Exchange JSON-RPC running on ${server.info.uri}`);
+        logger.info(`Exchange JSON-RPC running on ${server.info.uri}`);
+    }
 
     return server;
 }
