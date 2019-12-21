@@ -6,7 +6,7 @@ import { database } from "../../src/services/database";
 
 jest.setTimeout(10000);
 
-export const launchServer = async (): Promise<Server> => {
+export const createServer = async (): Promise<Server> => {
     database.connect(`${tmpdir()}/db.sqlite`);
 
     return startServer(

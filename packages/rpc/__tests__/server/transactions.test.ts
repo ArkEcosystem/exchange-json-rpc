@@ -4,11 +4,43 @@ import { Transactions } from "@arkecosystem/crypto";
 import { Server } from "@hapi/hapi";
 import { randomBytes } from "crypto";
 import nock from "nock";
-import { launchServer, sendRequest } from "../__support__";
+import { createServer, sendRequest } from "../__support__";
 
 let server: Server;
 
-beforeAll(async () => (server = await launchServer()));
+beforeAll(async () => {
+    nock("https://raw.githubusercontent.com")
+        .persist()
+        .get("/ArkEcosystem/peers/master/devnet.json")
+        .reply(200, [
+            {
+                ip: "167.114.29.51",
+                port: 4002,
+            },
+            {
+                ip: "167.114.29.52",
+                port: 4002,
+            },
+            {
+                ip: "167.114.29.53",
+                port: 4002,
+            },
+            {
+                ip: "167.114.29.54",
+                port: 4002,
+            },
+            {
+                ip: "167.114.29.55",
+                port: 4002,
+            },
+        ]);
+
+    nock.disableNetConnect();
+
+    server = await createServer();
+});
+
+afterAll(() => nock.enableNetConnect());
 
 afterEach(() => jest.restoreAllMocks());
 
