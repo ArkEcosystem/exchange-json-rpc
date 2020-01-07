@@ -1,4 +1,5 @@
 import { Managers, Types } from "@arkecosystem/crypto";
+import { PeerDiscovery } from "@arkecosystem/peers";
 import got from "got";
 import isReachable from "is-reachable";
 import sample from "lodash.sample";
@@ -6,15 +7,26 @@ import { IPeer } from "../interfaces";
 import { logger } from "./logger";
 
 class Network {
-    private options: { network: Types.NetworkName; peer: string; peerPort: number };
-    private seeds: IPeer[] = [];
+    private options: { network: Types.NetworkName; peer: string; maxLatency: number; peerPort: number };
+    private peerDiscovery!: PeerDiscovery;
 
-    public async init(options: { network: Types.NetworkName; peer: string; peerPort: number }): Promise<void> {
+    public async init(options: {
+        network: Types.NetworkName;
+        peer: string;
+        maxLatency: number;
+        peerPort: number;
+    }): Promise<void> {
         this.options = options;
+
+        const networkOrHost: string = this.options.peer
+            ? `http://${this.options.peer}:${this.options.peerPort}/api/peers`
+            : this.options.network;
+
+        this.peerDiscovery = (await PeerDiscovery.new({ networkOrHost })).withLatency(options.maxLatency);
 
         Managers.configManager.setFromPreset(options.network);
 
-        await (options.peer ? this.loadSeedsFromPeer() : this.loadSeedsFromGithub());
+        Managers.configManager.setHeight(await this.getHeight());
     }
 
     public async sendGET({ path, query = {} }: { path: string; query?: Record<string, any> }) {
@@ -25,9 +37,13 @@ class Network {
         return this.sendRequest("post", path, { body });
     }
 
+    private async getHeight(): Promise<number> {
+        return (await this.sendGET({ path: "blockchain" })).data.block.height;
+    }
+
     private async sendRequest(method: string, url: string, options, tries: number = 0, useSeed: boolean = false) {
         try {
-            const peer: IPeer = await this.getPeer(useSeed);
+            const peer: IPeer = await this.getPeer();
             const uri: string = `http://${peer.ip}:${peer.port}/api/${url}`;
 
             logger.info(`Sending request on "${this.options.network}" to "${uri}"`);
@@ -62,13 +78,9 @@ class Network {
         }
     }
 
-    private async getPeer(useSeed: boolean = false): Promise<IPeer> {
+    private async getPeer(): Promise<IPeer> {
         if (this.options.peer) {
             return { ip: this.options.peer, port: this.options.peerPort };
-        }
-
-        if (useSeed) {
-            return sample(this.seeds);
         }
 
         const peer: IPeer = sample(await this.getPeers());
@@ -80,57 +92,11 @@ class Network {
             return this.getPeer();
         }
 
-        return peer;
+        return { ip: peer.ip, port: peer.port };
     }
 
     private async getPeers(): Promise<IPeer[]> {
-        const { data } = await this.sendRequest("get", "peers", {}, 0, true);
-
-        if (!data || !data.length) {
-            return this.seeds;
-        }
-
-        const peers: IPeer[] = [];
-
-        for (const peer of data) {
-            const pluginName: string = Object.keys(peer.ports).find((key: string) => key.split("/")[1] === "core-api");
-
-            if (pluginName) {
-                const port: number = peer.ports[pluginName];
-
-                if (port >= 1 && port <= 65535) {
-                    peers.push({ ip: peer.ip, port });
-                }
-            }
-        }
-
-        return peers;
-    }
-
-    private async loadSeedsFromGithub(): Promise<void> {
-        const { body } = await got.get(
-            `https://raw.githubusercontent.com/ArkEcosystem/peers/master/${this.options.network}.json`,
-        );
-
-        this.setSeeds(JSON.parse(body));
-    }
-
-    private async loadSeedsFromPeer(): Promise<void> {
-        const { body } = await got.get(`http://${this.options.peer}:${this.options.peerPort}/api/peers`);
-
-        this.setSeeds(JSON.parse(body).data);
-    }
-
-    private setSeeds(seeds: IPeer[]): void {
-        if (!seeds.length) {
-            throw new Error("No seeds found");
-        }
-
-        for (const seed of seeds) {
-            seed.port = this.options.peerPort;
-        }
-
-        this.seeds = seeds;
+        return this.peerDiscovery.findPeersWithPlugin("core-api");
     }
 }
 

@@ -18,47 +18,10 @@
         "lint": "../../node_modules/tslint/bin/tslint -c ../../tslint.json -p ../../tslint-config.json './src/**/*.ts' --fix",
         "prepublishOnly": "yarn build",
         "prettier": "prettier --write \"./*.{ts,js,json,md}\" \"./src/**/*.{ts,js,json,md}\" \"./__tests__/**/*.{ts,js,json,md}\"",
-        "test": "jest --forceExit --runInBand"
-    },
-    "jest": {
-        "bail": true,
-        "collectCoverage": true,
-        "collectCoverageFrom": [
-            "src/**/*.ts",
-            "!src/index.ts",
-            "!**/node_modules/**"
-        ],
-        "coverageDirectory": "<rootDir>/.coverage",
-        "coverageReporters": [
-            "json",
-            "lcov",
-            "text",
-            "clover",
-            "html"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ],
-        "setupFilesAfterEnv": [
-            "jest-extended"
-        ],
-        "testEnvironment": "node",
-        "testMatch": [
-            "**/*.test.ts"
-        ],
-        "transform": {
-            "^.+\\.tsx?$": "ts-jest"
-        },
-        "verbose": true,
-        "watchman": false
+        "test": "jest"
     },
     "dependencies": {
-        "@arkecosystem/crypto": "^2.4 || ^2.5 || ^2.5.0-next.0 || ^2.6.0-next.0",
+        "@arkecosystem/crypto": "^2.6.0-next.0",
         "@hapi/boom": "^8.0.0",
         "@hapi/hapi": "^18.3.1",
         "@hapist/json-rpc": "^0.2.0",
@@ -83,7 +46,8 @@
         "@types/lodash.sample": "^4.2.6",
         "@types/pino": "^5.20.0",
         "@types/uuid": "^3.4.4",
-        "@types/wif": "^2.0.1"
+        "@types/wif": "^2.0.1",
+        "nock": "^11.7.0"
     },
     "engines": {
         "node": ">=10.x"

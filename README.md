@@ -66,6 +66,7 @@ exchange-json-rpc start
 | --host=            | the host that should be used to expose the RPC                               | 0.0.0.0                    | No       |
 | --port=            | the port that should be used to expose the RPC                               | 8008                       | No       |
 | --peer=            | the peer you want to use for communication, defaults to random network peers | n/a                        | No       |
+| --maxLatency=      | the maximum allowed latency of a peer, defaults to 300ms                     | 300                        | No       |
 | --whitelist=       | a comma separated list of IPs that can access the RPC                        | 127.0.0.1,::ffff:127.0.0.1 | No       |
 
 ### `restart`
@@ -104,6 +105,7 @@ exchange-json-rpc run
 | --host=            | the host that should be used to expose the RPC                               | 0.0.0.0                    | No       |
 | --port=            | the port that should be used to expose the RPC                               | 8008                       | No       |
 | --peer=            | the peer you want to use for communication, defaults to random network peers | n/a                        | No       |
+| --maxLatency=      | the maximum allowed latency of a peer, defaults to 300ms                     | 300                        | No       |
 | --whitelist=       | a comma separated list of IPs that can access the RPC                        | 127.0.0.1,::ffff:127.0.0.1 | No       |
 
 ### `status`
