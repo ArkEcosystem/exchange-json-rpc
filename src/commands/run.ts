@@ -1,4 +1,6 @@
-import { start } from "@arkecosystem/exchange-json-rpc";
+import { startServer } from "../server";
+import { database as db } from "../services/database";
+import { logger } from "../services/logger";
 import { CommandFlags } from "../types";
 import { BaseCommand } from "./command";
 
@@ -21,6 +23,12 @@ $ exchange-json-rpc run
 
         flags.whitelist = flags.whitelist.split(",");
 
-        await start({ database: `${paths.data}/exchange-json-rpc.sqlite`, server: flags });
+        db.connect(`${paths.data}/exchange-json-rpc.sqlite`);
+
+        if (flags.logger) {
+            logger.setLogger(flags.logger);
+        }
+
+        await startServer(flags.server);
     }
 }
