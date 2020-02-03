@@ -687,7 +687,7 @@
     "@hapi/cryptiles" "4.x.x"
     "@hapi/hoek" "6.x.x"
 
-"@hapi/iron@6.x.x":
+"@hapi/iron@6.x.x", "@hapi/iron@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/iron/-/iron-6.0.0.tgz#ca3f9136cda655bdd6028de0045da0de3d14436f"
   integrity sha512-zvGvWDufiTGpTJPG1Y/McN8UqWBu0k/xs/7l++HVU535NLHXsHhy54cfEMdW7EjwKfbBfM9Xy25FmTiobb7Hvw==
@@ -2076,7 +2076,7 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/hapi__boom@*", "@types/hapi__boom@^7.4.0":
+"@types/hapi__boom@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@types/hapi__boom/-/hapi__boom-7.4.0.tgz#81d58cffb67c54896614560c007a5015a79c30ba"
 
@@ -2084,23 +2084,18 @@
   version "10.2.2"
   resolved "https://registry.yarnpkg.com/@types/hapi__catbox/-/hapi__catbox-10.2.2.tgz#b13fbdd6006c8793eb80919158593bc2bf8307c4"
 
-"@types/hapi__hapi@^18.2.1":
-  version "18.2.5"
-  resolved "https://registry.yarnpkg.com/@types/hapi__hapi/-/hapi__hapi-18.2.5.tgz#37afc3db0380e89527bb850a0922f15da0bfe688"
+"@types/hapi__hapi@^19.0.0":
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/@types/hapi__hapi/-/hapi__hapi-19.0.1.tgz#90b39864cae1ebbd0ed79db4d08c304b4b6263c2"
+  integrity sha512-ecSEmVBGoKXSrpbLj2E1DbUqKQMnQcz4z+4wquoMoPThjBBcwOjRQLTwxNGwbCF88+IXHD8o2is3aFIm3nFwVg==
   dependencies:
-    "@types/hapi__boom" "*"
+    "@hapi/boom" "^9.0.0"
+    "@hapi/iron" "^6.0.0"
     "@types/hapi__catbox" "*"
-    "@types/hapi__iron" "*"
     "@types/hapi__joi" "*"
     "@types/hapi__mimos" "*"
     "@types/hapi__podium" "*"
     "@types/hapi__shot" "*"
-    "@types/node" "*"
-
-"@types/hapi__iron@*":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@types/hapi__iron/-/hapi__iron-5.1.0.tgz#35ebddae3a100c468b84fe075689522ad2f3703d"
-  dependencies:
     "@types/node" "*"
 
 "@types/hapi__joi@*":
