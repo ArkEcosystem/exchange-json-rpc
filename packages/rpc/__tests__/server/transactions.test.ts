@@ -219,7 +219,7 @@ describe("Transactions", () => {
     });
 
     describe("POST transactions.vote.create", () => {
-        it("should create a new transfer and verify", async () => {
+        it("should create a new vote and verify", async () => {
             const response = await sendRequest(server, "transactions.vote.create", {
                 publicKey: "023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359",
                 passphrase: "this is a top secret passphrase",
