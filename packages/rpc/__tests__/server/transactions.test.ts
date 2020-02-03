@@ -195,7 +195,7 @@ describe("Transactions", () => {
     });
 
     describe("POST transactions.delegateRegistration.create", () => {
-        it("should create a new transfer and verify", async () => {
+        it("should create a new delegate registration and verify", async () => {
             const response = await sendRequest(server, "transactions.delegateRegistration.create", {
                 username: "boldninja",
                 passphrase: "this is a top secret passphrase",
