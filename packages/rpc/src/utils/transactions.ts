@@ -4,6 +4,7 @@ import { logger } from "../services/logger";
 import { network } from "../services/network";
 
 const buildTransaction = async (
+    transactionType: string,
     transactionBuilder,
     params: Record<string, any>,
     method: "sign" | "signWithWif",
@@ -11,35 +12,13 @@ const buildTransaction = async (
     if (params.fee) {
         transactionBuilder.fee(params.fee);
     } else {
-        // Get the nonce of the sender wallet
-        const senderAddress: string =
-            method === "sign"
-                ? Identities.Address.fromPassphrase(params.passphrase)
-                : Identities.Address.fromPublicKey(Identities.PublicKey.fromWIF(params.passphrase));
-
-        try {
-            const { data } = await network.sendGET({
-                path: `wallets/${senderAddress}`,
-            });
-
-            notStrictEqual(data.nonce, undefined);
-
-            transactionBuilder.nonce(
-                Utils.BigNumber.make(data.nonce)
-                    .plus(1)
-                    .toFixed(),
-            );
-        } catch (error) {
-            throw new Error(`Failed to retrieve the nonce for ${senderAddress}.`);
-        }
-
         // Get the average fee from the network
         try {
             const { data } = await network.sendGET({
                 path: "node/fees",
             });
 
-            const fee: string = data[1].transfer.avg;
+            const fee: string = data[1][transactionType].avg;
 
             if (fee && Number(fee) > 0) {
                 transactionBuilder.fee(fee);
@@ -47,6 +26,28 @@ const buildTransaction = async (
         } catch (error) {
             logger.warn("Failed to retrieve the average fee.");
         }
+    }
+
+    // Get the nonce of the sender wallet
+    const senderAddress: string =
+        method === "sign"
+            ? Identities.Address.fromPassphrase(params.passphrase)
+            : Identities.Address.fromPublicKey(Identities.PublicKey.fromWIF(params.passphrase));
+
+    try {
+        const { data } = await network.sendGET({
+            path: `wallets/${senderAddress}`,
+        });
+
+        notStrictEqual(data.nonce, undefined);
+
+        transactionBuilder.nonce(
+            Utils.BigNumber.make(data.nonce)
+                .plus(1)
+                .toFixed(),
+        );
+    } catch (error) {
+        throw new Error(`Failed to retrieve the nonce for ${senderAddress}.`);
     }
 
     const transaction: Interfaces.ITransactionData = transactionBuilder[method](params.passphrase).getStruct();
@@ -76,7 +77,7 @@ export const buildTransfer = async (
         transactionBuilder.vendorField(params.vendorField);
     }
 
-    return buildTransaction(transactionBuilder, params, method);
+    return buildTransaction("transfer", transactionBuilder, params, method);
 };
 
 export const buildDelegateRegistration = async (
@@ -87,10 +88,9 @@ export const buildDelegateRegistration = async (
     },
     method: "sign" | "signWithWif",
 ): Promise<Interfaces.ITransactionData> => {
-    const transactionBuilder = Transactions.BuilderFactory.delegateRegistration()
-        .usernameAsset(params.username);
+    const transactionBuilder = Transactions.BuilderFactory.delegateRegistration().usernameAsset(params.username);
 
-    return buildTransaction(transactionBuilder, params, method);
+    return buildTransaction("delegateRegistration", transactionBuilder, params, method);
 };
 
 export const buildVote = async (
@@ -103,7 +103,7 @@ export const buildVote = async (
 ): Promise<Interfaces.ITransactionData> => {
     const transactionBuilder = Transactions.BuilderFactory.vote().votesAsset([`+${params.publicKey}`]);
 
-    return buildTransaction(transactionBuilder, params, method);
+    return buildTransaction("vote", transactionBuilder, params, method);
 };
 
 export const buildUnvote = async (
@@ -116,5 +116,5 @@ export const buildUnvote = async (
 ): Promise<Interfaces.ITransactionData> => {
     const transactionBuilder = Transactions.BuilderFactory.vote().votesAsset([`-${params.publicKey}`]);
 
-    return buildTransaction(transactionBuilder, params, method);
+    return buildTransaction("vote", transactionBuilder, params, method);
 };
