@@ -16,6 +16,7 @@ const buildTransaction = async (
         try {
             const { data } = await network.sendGET({
                 path: "node/fees",
+                query: { days: 30 },
             });
 
             const fee: string = data[1][transactionType].avg;
