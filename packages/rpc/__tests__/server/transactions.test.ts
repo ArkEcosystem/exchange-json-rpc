@@ -156,7 +156,7 @@ describe("Transactions", () => {
     });
 
     describe("POST transactions.create", () => {
-        it("should create a new transaction and verify", async () => {
+        it("should create a new transfer and verify", async () => {
             const response = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
@@ -167,7 +167,7 @@ describe("Transactions", () => {
             expect(verifyTransaction(response.body.result)).toBeTrue();
         });
 
-        it("should create a new transaction with a vendor field and verify", async () => {
+        it("should create a new transfer with a vendor field and verify", async () => {
             const response = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 passphrase: "this is a top secret passphrase",
@@ -186,6 +186,82 @@ describe("Transactions", () => {
             const response = await sendRequest(server, "transactions.create", {
                 amount: 100000000,
                 recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.error.code).toBe(422);
+            expect(spyVerify).toHaveBeenCalled();
+        });
+    });
+
+    describe("POST transactions.delegateRegistration.create", () => {
+        it("should create a new transfer and verify", async () => {
+            const response = await sendRequest(server, "transactions.delegateRegistration.create", {
+                username: "boldninja",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.result.asset.delegate.username).toBe("boldninja");
+            expect(verifyTransaction(response.body.result)).toBeTrue();
+        });
+
+        it("should return 422 if it fails to verify the transaction", async () => {
+            const spyVerify = jest.spyOn(Transactions.Verifier, "verifyHash").mockImplementation(() => false);
+
+            const response = await sendRequest(server, "transactions.delegateRegistration.create", {
+                username: "boldninja",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.error.code).toBe(422);
+            expect(spyVerify).toHaveBeenCalled();
+        });
+    });
+
+    describe("POST transactions.vote.create", () => {
+        it("should create a new transfer and verify", async () => {
+            const response = await sendRequest(server, "transactions.vote.create", {
+                publicKey: "023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.result.asset.votes).toEqual([
+                "+023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359",
+            ]);
+            expect(verifyTransaction(response.body.result)).toBeTrue();
+        });
+
+        it("should return 422 if it fails to verify the transaction", async () => {
+            const spyVerify = jest.spyOn(Transactions.Verifier, "verifyHash").mockImplementation(() => false);
+
+            const response = await sendRequest(server, "transactions.vote.create", {
+                publicKey: "023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.error.code).toBe(422);
+            expect(spyVerify).toHaveBeenCalled();
+        });
+    });
+
+    describe("POST transactions.unvote.create", () => {
+        it("should create a new unvite and verify", async () => {
+            const response = await sendRequest(server, "transactions.unvote.create", {
+                publicKey: "023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.result.asset.votes).toEqual([
+                "-023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359",
+            ]);
+            expect(verifyTransaction(response.body.result)).toBeTrue();
+        });
+
+        it("should return 422 if it fails to verify the transaction", async () => {
+            const spyVerify = jest.spyOn(Transactions.Verifier, "verifyHash").mockImplementation(() => false);
+
+            const response = await sendRequest(server, "transactions.unvote.create", {
+                publicKey: "023ee98f453661a1cb765fd60df95b4efb1e110660ffb88ae31c2368a70f1f7359",
                 passphrase: "this is a top secret passphrase",
             });
 

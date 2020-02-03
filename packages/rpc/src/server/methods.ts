@@ -4,7 +4,8 @@ import { generateMnemonic } from "bip39";
 import { IWallet } from "../interfaces";
 import { database } from "../services/database";
 import { network } from "../services/network";
-import { buildTransaction, decryptWIF, getBIP38Wallet } from "./utils";
+import { decryptWIF, getBIP38Wallet } from "../utils/crypto";
+import { buildDelegateRegistration, buildTransfer, buildUnvote, buildVote } from "../utils/transactions";
 
 export const methods = [
     {
@@ -118,7 +119,7 @@ export const methods = [
             let transaction: Interfaces.ITransactionData;
 
             try {
-                transaction = await buildTransaction(params, "sign");
+                transaction = await buildTransfer(params, "sign");
             } catch (error) {
                 return Boom.badData(error.message);
             }
@@ -148,6 +149,143 @@ export const methods = [
                 },
             },
             required: ["amount", "recipientId", "passphrase"],
+        },
+    },
+    {
+        name: "transactions.transfer.create",
+        async method(params: {
+            recipientId: string;
+            amount: string;
+            passphrase: string;
+            vendorField?: string;
+            fee?: string;
+        }) {
+            let transaction: Interfaces.ITransactionData;
+
+            try {
+                transaction = await buildTransfer(params, "sign");
+            } catch (error) {
+                return Boom.badData(error.message);
+            }
+
+            await database.set<Interfaces.ITransactionData>(transaction.id, transaction);
+
+            return transaction;
+        },
+        schema: {
+            type: "object",
+            properties: {
+                amount: {
+                    type: "number",
+                },
+                recipientId: {
+                    type: "string",
+                    $ref: "address",
+                },
+                passphrase: {
+                    type: "string",
+                },
+                vendorField: {
+                    type: "string",
+                },
+                fee: {
+                    type: "string",
+                },
+            },
+            required: ["amount", "recipientId", "passphrase"],
+        },
+    },
+    {
+        name: "transactions.delegateRegistration.create",
+        async method(params: { username: string; passphrase: string; fee?: string }) {
+            let transaction: Interfaces.ITransactionData;
+
+            try {
+                transaction = await buildDelegateRegistration(params, "sign");
+            } catch (error) {
+                return Boom.badData(error.message);
+            }
+
+            await database.set<Interfaces.ITransactionData>(transaction.id, transaction);
+
+            return transaction;
+        },
+        schema: {
+            type: "object",
+            properties: {
+                username: {
+                    type: "string",
+                },
+                passphrase: {
+                    type: "string",
+                },
+                fee: {
+                    type: "string",
+                },
+            },
+            required: ["username", "passphrase"],
+        },
+    },
+    {
+        name: "transactions.vote.create",
+        async method(params: { publicKey: string; passphrase: string; fee?: string }) {
+            let transaction: Interfaces.ITransactionData;
+
+            try {
+                transaction = await buildVote(params, "sign");
+            } catch (error) {
+                return Boom.badData(error.message);
+            }
+
+            await database.set<Interfaces.ITransactionData>(transaction.id, transaction);
+
+            return transaction;
+        },
+        schema: {
+            type: "object",
+            properties: {
+                publicKey: {
+                    type: "string",
+                },
+                passphrase: {
+                    type: "string",
+                },
+                fee: {
+                    type: "string",
+                },
+            },
+            required: ["publicKey", "passphrase"],
+        },
+    },
+    {
+        name: "transactions.unvote.create",
+        async method(params: { publicKey: string; passphrase: string; fee?: string }) {
+            let transaction: Interfaces.ITransactionData;
+
+            try {
+                transaction = await buildUnvote(params, "sign");
+            } catch (error) {
+                return Boom.badData(error.message);
+            }
+
+            await database.set<Interfaces.ITransactionData>(transaction.id, transaction);
+
+            return transaction;
+        },
+        schema: {
+            type: "object",
+            properties: {
+                publicKey: {
+                    type: "string",
+                },
+                passphrase: {
+                    type: "string",
+                },
+                fee: {
+                    type: "string",
+                },
+            },
+            required: ["publicKey", "passphrase"],
         },
     },
     {
@@ -191,7 +329,7 @@ export const methods = [
                 let transaction: Interfaces.ITransactionData;
 
                 try {
-                    transaction = await buildTransaction({ ...params, ...{ passphrase: wallet.wif } }, "signWithWif");
+                    transaction = await buildTransfer({ ...params, ...{ passphrase: wallet.wif } }, "signWithWif");
                 } catch (error) {
                     return Boom.badData();
                 }
