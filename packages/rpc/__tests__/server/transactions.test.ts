@@ -1,6 +1,7 @@
 import "jest-extended";
 
 import { Transactions } from "@arkecosystem/crypto";
+import { BigNumber } from "@arkecosystem/crypto/dist/utils";
 import { Server } from "@hapi/hapi";
 import { randomBytes } from "crypto";
 import nock from "nock";
@@ -61,17 +62,7 @@ describe("Transactions", () => {
                 },
             ],
         })
-        .get("/api/blockchain")
-        .reply(200, {
-            data: {
-                block: {
-                    height: 10702529,
-                    id: "aa6f13f08e32db84991ec8a7b19558b99027eac2d02920d19ded2222a55fba0a",
-                },
-                supply: "14625386000000004",
-            },
-        })
-        .get("/api/node/fees")
+        .get("/api/node/fees?days=30")
         .reply(200, {
             meta: {
                 days: 7,
@@ -115,6 +106,19 @@ describe("Transactions", () => {
         .reply(200, {
             data: {
                 nonce: "1",
+            },
+        });
+
+    const blockchainNock = nock(/\d+\.\d+\.\d+\.\d+/)
+        .persist()
+        .get("/api/blockchain")
+        .reply(200, {
+            data: {
+                block: {
+                    height: 10702529,
+                    id: "aa6f13f08e32db84991ec8a7b19558b99027eac2d02920d19ded2222a55fba0a",
+                },
+                supply: "14625386000000004",
             },
         });
 
@@ -164,6 +168,18 @@ describe("Transactions", () => {
             });
 
             expect(response.body.result.recipientId).toBe("D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib");
+            expect(verifyTransaction(response.body.result)).toBeTrue();
+        });
+
+        it("should add a nonce if aip11 is enabled", async () => {
+            const response = await sendRequest(server, "transactions.create", {
+                amount: 100000000,
+                recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.result.recipientId).toBe("D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib");
+            expect(response.body.result.nonce.toString()).toBe("2");
             expect(verifyTransaction(response.body.result)).toBeTrue();
         });
 
@@ -385,6 +401,35 @@ describe("Transactions", () => {
 
             expect(response.body.error.code).toBe(422);
             expect(spyVerify).toHaveBeenCalled();
+        });
+
+        it("should not add a nonce if aip11 is not enabled", async () => {
+            blockchainNock.persist(false);
+            nock.abortPendingRequests();
+
+            nock(/\d+\.\d+\.\d+\.\d+/)
+                .persist()
+                .get("/api/blockchain")
+                .reply(200, {
+                    data: {
+                        block: {
+                            height: 1,
+                            id: "aa6f13f08e32db84991ec8a7b19558b99027eac2d02920d19ded2222a55fba0a",
+                        },
+                        supply: "14625386000000004",
+                    },
+                });
+
+            const newServer = await createServer(); // Need to initialize it again to set the height
+            const response = await sendRequest(newServer, "transactions.create", {
+                amount: 100000000,
+                recipientId: "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
+                passphrase: "this is a top secret passphrase",
+            });
+
+            expect(response.body.result.recipientId).toBe("D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib");
+            expect(response.body.result.nonce).toBe(BigNumber.ZERO);
+            expect(verifyTransaction(response.body.result)).toBeTrue();
         });
     });
 });

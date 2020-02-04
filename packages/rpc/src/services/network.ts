@@ -26,9 +26,6 @@ class Network {
 
         Managers.configManager.setFromPreset(options.network);
 
-        const height = await this.getHeight();
-        Managers.configManager.setHeight(height);
-
         this.checkForAip11Enabled();
     }
 
