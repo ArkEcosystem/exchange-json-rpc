@@ -1,4 +1,4 @@
-import { Identities, Interfaces, Transactions, Utils } from "@arkecosystem/crypto";
+import { Identities, Interfaces, Managers, Transactions, Utils } from "@arkecosystem/crypto";
 import { notStrictEqual } from "assert";
 import { logger } from "../services/logger";
 import { network } from "../services/network";
@@ -29,26 +29,29 @@ const buildTransaction = async (
         }
     }
 
-    // Get the nonce of the sender wallet
-    const senderAddress: string =
-        method === "sign"
-            ? Identities.Address.fromPassphrase(params.passphrase)
-            : Identities.Address.fromPublicKey(Identities.PublicKey.fromWIF(params.passphrase));
+    const milestone = Managers.configManager.getMilestone(await network.getHeight());
+    if (milestone.aip11) {
+        // If AIP11 is enabled, get the nonce of the sender wallet
+        const senderAddress: string =
+            method === "sign"
+                ? Identities.Address.fromPassphrase(params.passphrase)
+                : Identities.Address.fromPublicKey(Identities.PublicKey.fromWIF(params.passphrase));
 
-    try {
-        const { data } = await network.sendGET({
-            path: `wallets/${senderAddress}`,
-        });
+        try {
+            const { data } = await network.sendGET({
+                path: `wallets/${senderAddress}`,
+            });
 
-        notStrictEqual(data.nonce, undefined);
+            notStrictEqual(data.nonce, undefined);
 
-        transactionBuilder.nonce(
-            Utils.BigNumber.make(data.nonce)
-                .plus(1)
-                .toFixed(),
-        );
-    } catch (error) {
-        throw new Error(`Failed to retrieve the nonce for ${senderAddress}.`);
+            transactionBuilder.nonce(
+                Utils.BigNumber.make(data.nonce)
+                    .plus(1)
+                    .toFixed(),
+            );
+        } catch (error) {
+            throw new Error(`Failed to retrieve the nonce for ${senderAddress}.`);
+        }
     }
 
     const transaction: Interfaces.ITransactionData = transactionBuilder[method](params.passphrase).getStruct();

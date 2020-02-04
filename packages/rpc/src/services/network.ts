@@ -26,7 +26,10 @@ class Network {
 
         Managers.configManager.setFromPreset(options.network);
 
-        Managers.configManager.setHeight(await this.getHeight());
+        const height = await this.getHeight();
+        Managers.configManager.setHeight(height);
+
+        this.checkForAip11Enabled();
     }
 
     public async sendGET({ path, query = {} }: { path: string; query?: Record<string, any> }) {
@@ -37,8 +40,18 @@ class Network {
         return this.sendRequest("post", path, { body });
     }
 
-    private async getHeight(): Promise<number> {
+    public async getHeight(): Promise<number> {
         return (await this.sendGET({ path: "blockchain" })).data.block.height;
+    }
+
+    private async checkForAip11Enabled() {
+        const height = await this.getHeight();
+        Managers.configManager.setHeight(height);
+
+        const milestone = Managers.configManager.getMilestone(height);
+        if (!milestone.aip11) {
+            setTimeout(() => this.checkForAip11Enabled(), milestone.blocktime * 1000);
+        }
     }
 
     private async sendRequest(method: string, url: string, options, tries: number = 0, useSeed: boolean = false) {
