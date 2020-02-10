@@ -65,7 +65,7 @@
         "watchman": false
     },
     "dependencies": {
-        "@arkecosystem/crypto": "^2.6",
+        "@arkecosystem/crypto": "^2.6.0-next",
         "@arkecosystem/exchange-json-rpc": "^2.0.0",
         "@arkecosystem/peers": "^0.2.1",
         "@faustbrian/foreman": "^0.1.3",
