@@ -29,7 +29,7 @@ const buildTransaction = async (
         }
     }
 
-    const milestone = Managers.configManager.getMilestone(await network.getHeight());
+    const milestone = Managers.configManager.getMilestone();
     if (milestone.aip11) {
         // If AIP11 is enabled, get the nonce of the sender wallet
         const senderAddress: string =
