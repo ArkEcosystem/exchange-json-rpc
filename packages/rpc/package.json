@@ -37,7 +37,7 @@
         "pino": "^5.12.6",
         "pino-pretty": "^3.1.0",
         "sql": "^0.78.0",
-        "uuid": "^3.3.2",
+        "uuid": "^7.0.0",
         "wif": "^2.0.6"
     },
     "devDependencies": {
@@ -46,9 +46,9 @@
         "@types/hapi__hapi": "^19.0.0",
         "@types/lodash.sample": "^4.2.6",
         "@types/pino": "^5.20.0",
-        "@types/uuid": "^3.4.4",
+        "@types/uuid": "^7.0.0",
         "@types/wif": "^2.0.1",
-        "nock": "^11.7.0"
+        "nock": "^12.0.0"
     },
     "engines": {
         "node": ">=10.x"
