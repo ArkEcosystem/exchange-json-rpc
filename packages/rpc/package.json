@@ -35,7 +35,7 @@
         "json-buffer": "^3.0.1",
         "lodash.sample": "^4.2.1",
         "pino": "^5.12.6",
-        "pino-pretty": "^3.1.0",
+        "pino-pretty": "^4.0.0",
         "sql": "^0.78.0",
         "uuid": "^7.0.0",
         "wif": "^2.0.6"
