@@ -30,7 +30,7 @@
         "better-sqlite3": "^6.0.0",
         "bip39": "^3.0.2",
         "fs-extra": "^8.0.1",
-        "got": "^9.6.0",
+        "got": "^11.0.0",
         "is-reachable": "^4.0.0",
         "json-buffer": "^3.0.1",
         "lodash.sample": "^4.2.1",
