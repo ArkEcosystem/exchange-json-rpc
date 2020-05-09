@@ -22,7 +22,7 @@
     },
     "dependencies": {
         "@arkecosystem/crypto": "^2.6",
-        "@arkecosystem/peers": "^0.2.1",
+        "@arkecosystem/peers": "^0.3.0",
         "@hapi/boom": "^9.0.0",
         "@hapi/hapi": "^19.0.0",
         "@hapist/json-rpc": "^0.2.0",
