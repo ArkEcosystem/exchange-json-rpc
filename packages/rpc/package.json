@@ -37,7 +37,7 @@
         "pino": "^6.0.0",
         "pino-pretty": "^3.1.0",
         "sql": "^0.78.0",
-        "uuid": "^7.0.0",
+        "uuid": "^8.0.0",
         "wif": "^2.0.6"
     },
     "devDependencies": {
