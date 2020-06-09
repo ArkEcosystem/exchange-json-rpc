@@ -1,6 +1,6 @@
 import { Server } from "@hapi/hapi";
 import { tmpdir } from "os";
-import uuid from "uuid/v4";
+import { v4 as uuidv4 } from 'uuid';
 import { startServer } from "../../src/server";
 import { database } from "../../src/services/database";
 
@@ -23,7 +23,7 @@ export const createServer = async (): Promise<Server> => {
 };
 
 export const sendRequest = async (server: Server, method, params: any = {}) => {
-    const id: string = uuid();
+    const id: string = uuidv4();
     const response = await server.inject({
         method: "POST",
         url: "/",
