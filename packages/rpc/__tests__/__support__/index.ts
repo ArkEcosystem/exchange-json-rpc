@@ -1,6 +1,6 @@
 import { Server } from "@hapi/hapi";
 import { tmpdir } from "os";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { startServer } from "../../src/server";
 import { database } from "../../src/services/database";
 
