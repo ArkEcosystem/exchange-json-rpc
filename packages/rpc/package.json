@@ -46,7 +46,7 @@
         "@types/hapi__hapi": "^19.0.0",
         "@types/lodash.sample": "^4.2.6",
         "@types/pino": "^6.0.0",
-        "@types/uuid": "^7.0.0",
+        "@types/uuid": "^8.0.0",
         "@types/wif": "^2.0.1",
         "nock": "^12.0.0"
     },
