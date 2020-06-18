@@ -27,7 +27,7 @@
         "@hapi/hapi": "^19.0.0",
         "@hapist/json-rpc": "^0.2.0",
         "@hapist/whitelist": "^0.1.0",
-        "better-sqlite3": "^7.0.0",
+        "better-sqlite3": "^7.1.0",
         "bip39": "^3.0.2",
         "fs-extra": "^8.0.1",
         "got": "^9.6.0",
