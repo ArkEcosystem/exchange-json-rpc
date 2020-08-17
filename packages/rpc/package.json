@@ -24,7 +24,7 @@
         "@arkecosystem/crypto": "^2.6",
         "@arkecosystem/peers": "^0.2.1",
         "@hapi/boom": "^9.0.0",
-        "@hapi/hapi": "^19.0.0",
+        "@hapi/hapi": "^20.0.0",
         "@hapist/json-rpc": "^0.2.0",
         "@hapist/whitelist": "^0.1.0",
         "better-sqlite3": "^7.1.0",
