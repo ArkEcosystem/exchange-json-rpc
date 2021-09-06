@@ -50,7 +50,7 @@ const verifyTransaction = (data): boolean => Transactions.TransactionFactory.fro
 describe("Transactions", () => {
     nock(/\d+\.\d+\.\d+\.\d+/)
         .persist()
-        .get("/api/v2/peers")
+        .get("/api/peers")
         .reply(200, {
             data: [
                 {
