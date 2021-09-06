@@ -92,7 +92,7 @@ export const methods = [
             });
 
             if (Object.keys(broadcast.errors || {}).length > 0) {
-                return Boom.badData(broadcast.errors[transaction.id][0].message);
+                return Boom.badData(broadcast.errors[transaction.id].message);
             }
 
             return transaction;
