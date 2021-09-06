@@ -19,11 +19,13 @@ class Database {
             columns: [
                 {
                     dataType: `VARCHAR(255)`,
+                    // @ts-ignore
                     name: "key",
                     primaryKey: true,
                 },
                 {
                     dataType: "TEXT",
+                    // @ts-ignore
                     name: "value",
                 },
             ],

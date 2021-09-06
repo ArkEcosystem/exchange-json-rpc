@@ -21,7 +21,7 @@
         "test": "jest"
     },
     "dependencies": {
-        "@arkecosystem/crypto": "^2.6",
+        "@arkecosystem/crypto": "^3.0.0-next.34",
         "@arkecosystem/peers": "^0.3.0",
         "@hapi/boom": "^9.0.0",
         "@hapi/hapi": "^20.0.0",
