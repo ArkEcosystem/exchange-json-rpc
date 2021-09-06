@@ -7,7 +7,6 @@
 [![Latest Version](https://badgen.now.sh/npm/v/@arkecosystem/exchange-json-rpc)](https://www.npmjs.com/package/@arkecosystem/exchange-json-rpc)
 [![Node Engine](https://badgen.now.sh/npm/node/@arkecosystem/exchange-json-rpc)](https://www.npmjs.com/package/@arkecosystem/exchange-json-rpc)
 [![Build Status](https://badgen.now.sh/circleci/github/ArkEcosystem/exchange-json-rpc)](https://circleci.com/gh/ArkEcosystem/exchange-json-rpc)
-[![Codecov](https://badgen.now.sh/codecov/c/github/ArkEcosystem/exchange-json-rpc)](https://codecov.io/gh/ArkEcosystem/exchange-json-rpc)
 [![License: MIT](https://badgen.now.sh/badge/license/MIT/green)](https://opensource.org/licenses/MIT)
 
 > Lead Maintainer: [Brian Faust](https://github.com/faustbrian)
