@@ -48,7 +48,7 @@ afterEach(() => jest.restoreAllMocks());
 const verifyTransaction = (data): boolean => Transactions.TransactionFactory.fromData(data).verify();
 
 describe("Transactions", () => {
-    nock(/\d+\.\d+\.\d+\.\d+/)
+    nock('https://ark-test.payvo.com:443')
         .persist()
         .get("/api/peers")
         .reply(200, {
@@ -109,7 +109,7 @@ describe("Transactions", () => {
             },
         });
 
-    const blockchainNock = nock(/\d+\.\d+\.\d+\.\d+/)
+    const blockchainNock = nock('https://ark-test.payvo.com:443')
         .persist()
         .get("/api/blockchain")
         .reply(200, {
@@ -124,7 +124,7 @@ describe("Transactions", () => {
 
     describe("POST transactions.info", () => {
         it("should get the transaction for the given ID", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/transactions/3e3817fd0c35bc36674f3874c2953fa3e35877cbcdb44a08bdc6083dbd39d572")
                 .reply(200, {
                     data: {
@@ -139,7 +139,7 @@ describe("Transactions", () => {
         });
 
         it("should fail to get the transaction for the given ID", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/transactions/e4311204acf8a86ba833e494f5292475c6e9e0913fc455a12601b4b6b55818d8")
                 .thrice()
                 .reply(404, {
@@ -294,7 +294,7 @@ describe("Transactions", () => {
                 passphrase: "this is a top secret passphrase",
             });
 
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .post("/api/transactions")
                 .reply(200, {
                     data: {
@@ -407,7 +407,7 @@ describe("Transactions", () => {
             blockchainNock.persist(false);
             nock.abortPendingRequests();
 
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .persist()
                 .get("/api/blockchain")
                 .reply(200, {

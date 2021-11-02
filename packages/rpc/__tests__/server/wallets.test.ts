@@ -44,7 +44,7 @@ afterAll(() => nock.enableNetConnect());
 afterEach(() => jest.restoreAllMocks());
 
 describe("Wallets", () => {
-    nock(/\d+\.\d+\.\d+\.\d+/)
+    nock('https://ark-test.payvo.com:443')
         .persist()
         .get("/api/peers")
         .reply(200, {
@@ -71,7 +71,7 @@ describe("Wallets", () => {
 
     describe("POST wallets.info", () => {
         it("should get information about the given wallet", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/wallets/D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax")
                 .reply(200, {
                     data: {
@@ -89,7 +89,7 @@ describe("Wallets", () => {
         it("should fail to get information about the given wallet", async () => {
             const address: string = Identities.Address.fromPassphrase(Math.random().toString(36));
 
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get(/.*/)
                 .thrice()
                 .reply(404, {
@@ -109,7 +109,7 @@ describe("Wallets", () => {
 
     describe("POST wallets.transactions", () => {
         it("should get the transactions for the given wallet", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/wallets/D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax/transactions?offset=0&orderBy=timestamp%3Adesc")
                 .reply(200, {
                     meta: {
@@ -141,7 +141,7 @@ describe("Wallets", () => {
         it("should fail to get transactions for the given wallet", async () => {
             const address: string = Identities.Address.fromPassphrase(Math.random().toString(36));
 
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get(`/api/wallets/${address}/transactions?offset=0&orderBy=timestamp%3Adesc`)
                 .thrice()
                 .reply(404, {
@@ -161,7 +161,7 @@ describe("Wallets", () => {
 
     describe("POST wallets.create", () => {
         it("should create a new wallet", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/wallets/D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax/transactions")
                 .reply(200, {
                     data: new Array(100).fill(0),
@@ -186,7 +186,7 @@ describe("Wallets", () => {
 
         describe("create", () => {
             it("should create a new wallet", async () => {
-                nock(/\d+\.\d+\.\d+\.\d+/)
+                nock('https://ark-test.payvo.com:443')
                     .get("/api/wallets/D6Z26L69gdk9qYmTv5uzk3uGepigtHY4ax/transactions")
                     .reply(200, {
                         data: new Array(100).fill(0),

@@ -16,7 +16,6 @@ export const createServer = async (): Promise<Server> => {
             allowRemote: false,
             whitelist: ["127.0.0.1", "::ffff:127.0.0.1"] as any,
             network: "devnet",
-            peerPort: 4003,
         },
         true,
     );

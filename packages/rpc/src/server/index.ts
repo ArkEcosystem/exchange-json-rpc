@@ -69,8 +69,6 @@ export async function startServer(
     await network.init({
         network: options.network as Types.NetworkName,
         peer: options.peer as string,
-        maxLatency: options.maxLatency as number,
-        peerPort: options.peerPort as number,
     });
 
     if (!onlyCreate) {

@@ -43,7 +43,7 @@ afterAll(() => nock.enableNetConnect());
 afterEach(() => jest.restoreAllMocks());
 
 describe("Blocks", () => {
-    nock(/\d+\.\d+\.\d+\.\d+/)
+    nock('https://ark-test.payvo.com:443')
         .persist()
         .get("/api/peers")
         .reply(200, {
@@ -70,7 +70,7 @@ describe("Blocks", () => {
 
     describe("POST blocks.latest", () => {
         it("should get the latest block", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/blocks?orderBy=height%3Adesc&limit=1")
                 .reply(200, {
                     data: [
@@ -88,7 +88,7 @@ describe("Blocks", () => {
 
     describe("POST blocks.info", () => {
         it("should get the block information", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/blocks/13114381566690093367")
                 .reply(200, {
                     data: {
@@ -104,7 +104,7 @@ describe("Blocks", () => {
         });
 
         it("should fail to get the block information", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/blocks/66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362")
                 .thrice()
                 .reply(404, {
@@ -127,7 +127,7 @@ describe("Blocks", () => {
 
     describe("POST blocks.transactions", () => {
         it("should get the block transactions", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get("/api/blocks/13114381566690093367/transactions?orderBy=timestamp%3Adesc")
                 .reply(200, {
                     meta: {
@@ -154,7 +154,7 @@ describe("Blocks", () => {
         });
 
         it("should fail to get the block transactions", async () => {
-            nock(/\d+\.\d+\.\d+\.\d+/)
+            nock('https://ark-test.payvo.com:443')
                 .get(
                     "/api/blocks/66af2f6ccd37bbd4b967d48eb13e6b7e411c0d287e2f70308af9dc69b4322362/transactions?orderBy=timestamp%3Adesc",
                 )

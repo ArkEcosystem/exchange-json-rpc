@@ -1,28 +1,15 @@
 import { Managers, Types } from "@arkecosystem/crypto";
-import { PeerDiscovery } from "@arkecosystem/peers";
 import got from "got";
-import isReachable from "is-reachable";
-import sample from "lodash.sample";
-import { IPeer } from "../interfaces";
 import { logger } from "./logger";
 
 class Network {
-    private options: { network: Types.NetworkName; peer: string; maxLatency: number; peerPort: number };
-    private peerDiscovery!: PeerDiscovery;
+    private options: { network: Types.NetworkName; peer: string; };
 
     public async init(options: {
         network: Types.NetworkName;
         peer: string;
-        maxLatency: number;
-        peerPort: number;
     }): Promise<void> {
         this.options = options;
-
-        const networkOrHost: string = this.options.peer
-            ? `http://${this.options.peer}:${this.options.peerPort}/api/peers`
-            : this.options.network;
-
-        this.peerDiscovery = (await PeerDiscovery.new({ networkOrHost })).withLatency(options.maxLatency);
 
         Managers.configManager.setFromPreset(options.network);
 
@@ -53,8 +40,7 @@ class Network {
 
     private async sendRequest(method: string, url: string, options, tries: number = 0, useSeed: boolean = false) {
         try {
-            const peer: IPeer = await this.getPeer();
-            const uri: string = `http://${peer.ip}:${peer.port}/api/${url}`;
+            const uri: string = `${this.getPeer()}/api/${url}`;
 
             logger.info(`Sending request on "${this.options.network}" to "${uri}"`);
 
@@ -88,25 +74,16 @@ class Network {
         }
     }
 
-    private async getPeer(): Promise<IPeer> {
+    private getPeer(): string {
         if (this.options.peer) {
-            return { ip: this.options.peer, port: this.options.peerPort };
+            return this.options.peer;
         }
 
-        const peer: IPeer = sample(await this.getPeers());
-        const reachable: boolean = await isReachable(`${peer.ip}:${peer.port}`);
-
-        if (!reachable) {
-            logger.warn(`${peer.ip}:${peer.port} is unresponsive. Choosing new peer.`);
-
-            return this.getPeer();
+        if (this.options.network === "mainnet") {
+            return "https://ark-live.payvo.com";
         }
 
-        return { ip: peer.ip, port: peer.port };
-    }
-
-    private async getPeers(): Promise<IPeer[]> {
-        return this.peerDiscovery.findPeersWithPlugin("core-api");
+        return "https://ark-test.payvo.com";
     }
 }
 
